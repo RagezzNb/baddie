@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEPHYX - Contact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/glitch.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <div id="starfield"></div>
+    <div id="particles"></div>
+
+    <div class="audio-controls">
+        <button id="audioToggle" class="audio-btn">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo glitch" data-text="SEPHYX">SEPHYX</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="lookbook.html" class="nav-link">Lookbook</a>
+                <a href="saved.html" class="nav-link">Saved Fits</a>
+                <a href="customizer.html" class="nav-link">Outfit Generator</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link active">Contact</a>
+                <a href="track.html" class="nav-link">Track Order</a>
+                <a href="account.html" class="nav-link">Account</a>
+            </div>
+            <div class="nav-icons">
+                <button id="cartToggle" class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="contact-hero">
+            <h1 class="page-title glitch" data-text="CONTACT">CONTACT</h1>
+            <p class="page-subtitle">DM to order, collab, or ask anything</p>
+        </section>
+
+        <section class="contact-content">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Get in Touch</h2>
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Instagram</h3>
+                            <p>@sephyxofficial</p>
+                            <a href="https://instagram.com/sephyxofficial" target="_blank" class="contact-link">
+                                Follow & DM
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Location</h3>
+                            <p>Based in Qatar</p>
+                            <p>Cash on Delivery Only</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Delivery</h3>
+                            <p>Qatar-wide COD</p>
+                            <p>Same-day delivery available</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Collaborations</h3>
+                            <p>Open to partnerships</p>
+                            <p>Artists, influencers, brands</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-section">
+                    <h2>Secret Drop Codes</h2>
+                    <p>Sign up to receive exclusive drop notifications and secret codes</p>
+                    
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="instagram">Instagram Handle</label>
+                            <input type="text" id="instagram" name="instagram" placeholder="@yourusername">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="interests">What interests you?</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="drops"> Secret Drops
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="collabs"> Collaborations
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="events"> Events & Meetups
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="early"> Early Access
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Tell us your vibe..." rows="4"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <span>Join the Cult</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="info-sections">
+                <div class="info-section">
+                    <h3><i class="fas fa-undo"></i> Refund Policy</h3>
+                    <div class="info-content">
+                        <p><strong>Cash on Delivery Returns:</strong></p>
+                        <ul>
+                            <li>7-day return window from delivery</li>
+                            <li>Items must be unworn with tags</li>
+                            <li>Original packaging required</li>
+                            <li>Full refund processed within 24-48 hours</li>
+                        </ul>
+                        <p><strong>Exchange Policy:</strong></p>
+                        <ul>
+                            <li>Size exchanges within 14 days</li>
+                            <li>Subject to availability</li>
+                            <li>Free exchange for first-time customers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h3><i class="fas fa-shield-alt"></i> Authenticity Guarantee</h3>
+                    <div class="info-content">
+                        <p>Every SEPHYX piece comes with:</p>
+                        <ul>
+                            <li>Unique NFC authentication chip</li>
+                            <li>Holographic authenticity sticker</li>
+                            <li>QR code linking to blockchain verification</li>
+                            <li>Digital certificate of authenticity</li>
+                        </ul>
+                        <p>Counterfeit protection is built into our DNA. If it doesn't have the tech, it's not SEPHYX.</p>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h3><i class="fas fa-clock"></i> Response Times</h3>
+                    <div class="info-content">
+                        <p><strong>Instagram DMs:</strong> 1-6 hours</p>
+                        <p><strong>Order Confirmations:</strong> Immediate</p>
+                        <p><strong>Delivery Updates:</strong> Real-time via SMS</p>
+                        <p><strong>Support Issues:</strong> 24 hours max</p>
+                        <br>
+                        <p>We're a small cult with big ambitions. Every message gets personal attention from the SEPHYX team.</p>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h3><i class="fas fa-code"></i> For Developers</h3>
+                    <div class="info-content">
+                        <p>Found a bug? Want to contribute to the SEPHYX digital experience?</p>
+                        <ul>
+                            <li>Report issues via Instagram DM</li>
+                            <li>Include screenshots and browser info</li>
+                            <li>Contribute to our open-source AR filters</li>
+                            <li>Join our beta testing program</li>
+                        </ul>
+                        <p>Hackers and builders welcome. Help us glitch reality.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="emergency-contact">
+                <h2 class="glitch" data-text="EMERGENCY DRIP HOTLINE">EMERGENCY DRIP HOTLINE</h2>
+                <p>Need that fit ASAP? Having a style emergency?</p>
+                <a href="https://instagram.com/direct/new/" target="_blank" class="emergency-btn">
+                    <i class="fas fa-bolt"></i>
+                    INSTANT DM
+                </a>
+                <p class="emergency-note">Response time: Usually under 30 minutes during Qatar business hours</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Drawer -->
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="cart-header">
+            <h3>Your Vault</h3>
+            <button id="closeCart" class="close-btn">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: QR <span id="cartTotal">0</span></div>
+            <button class="checkout-btn" id="checkoutBtn">Buy Now</button>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <span>SEPHYX AI</span>
+                <button class="chatbot-close" id="chatbotClose">&times;</button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="type your vibe...">
+                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Get checked interests
+            const interests = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                .map(cb => cb.value);
+            data.interests = interests;
+            
+            // Store submission (since no backend)
+            const storage = new LocalStorage();
+            const submissions = storage.get('contactSubmissions', []);
+            submissions.push({
+                ...data,
+                timestamp: new Date().toISOString()
+            });
+            storage.set('contactSubmissions', submissions);
+            
+            // Visual feedback
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-check"></i> Joined the Cult!';
+            submitBtn.style.background = 'linear-gradient(45deg, #00ff00, #00aa00)';
+            
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.style.background = '';
+                this.reset();
+            }, 3000);
+        });
+    </script>
+
+    <style>
+        .contact-hero {
+            text-align: center;
+            margin: 100px 0 80px;
+        }
+
+        .contact-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+
+        .contact-info h2 {
+            color: var(--neon-cyan);
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-method:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: black;
+            flex-shrink: 0;
+        }
+
+        .contact-details h3 {
+            color: white;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .contact-details p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 5px;
+        }
+
+        .contact-link {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--neon-pink);
+        }
+
+        .contact-form-section h2 {
+            color: var(--neon-pink);
+            margin-bottom: 15px;
+            font-size: 2rem;
+        }
+
+        .contact-form-section > p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .contact-form {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-pink);
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--neon-cyan);
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 8px;
+            padding: 12px;
+            color: white;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .checkbox-label:hover {
+            color: var(--neon-cyan);
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: auto;
+            accent-color: var(--neon-cyan);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            border: none;
+            border-radius: 25px;
+            padding: 15px;
+            color: black;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5);
+        }
+
+        .info-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .info-section {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .info-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .info-section h3 {
+            color: var(--neon-cyan);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-content p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .info-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-content li {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .info-content li::before {
+            content: '▸';
+            color: var(--neon-cyan);
+            position: absolute;
+            left: 0;
+        }
+
+        .emergency-contact {
+            text-align: center;
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff4444;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 80px 0;
+        }
+
+        .emergency-contact h2 {
+            color: #ff4444;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+
+        .emergency-contact p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .emergency-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #ff4444;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .emergency-btn:hover {
+            background: #ff6666;
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 68, 68, 0.5);
+        }
+
+        .emergency-note {
+            margin-top: 20px !important;
+            font-size: 0.9rem !important;
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .emergency-contact {
+                padding: 30px 20px;
+            }
+            
+            .emergency-contact h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</body>
+</html>

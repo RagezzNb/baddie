@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEPHYX - The Vault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/glitch.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        .vault-header {
+            text-align: center;
+            margin: 100px 0 50px;
+        }
+
+        .vault-title {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: flicker 2s infinite;
+        }
+
+        .vault-logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+            animation: rotate 10s linear infinite;
+            border: 2px solid var(--neon-cyan);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 900;
+        }
+
+        .vault-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .vault-item {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vault-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+        }
+
+        .vault-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .vault-item:hover::before {
+            left: 100%;
+        }
+
+        .vault-badge {
+            background: var(--neon-pink);
+            color: black;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .countdown {
+            background: rgba(255, 0, 255, 0.1);
+            border: 1px solid var(--neon-pink);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin: 50px auto;
+            max-width: 500px;
+        }
+
+        .countdown-timer {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--neon-pink);
+            margin: 20px 0;
+        }
+
+        .qr-section {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: white;
+            margin: 0 auto 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: black;
+            font-weight: bold;
+        }
+
+        .drip-pack-btn {
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            color: black;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .drip-pack-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5);
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="starfield"></div>
+    <div id="particles"></div>
+
+    <div class="audio-controls">
+        <button id="audioToggle" class="audio-btn">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo glitch" data-text="SEPHYX">SEPHYX</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="lookbook.html" class="nav-link">Lookbook</a>
+                <a href="saved.html" class="nav-link">Saved Fits</a>
+                <a href="customizer.html" class="nav-link">Outfit Generator</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="track.html" class="nav-link">Track Order</a>
+                <a href="account.html" class="nav-link">Account</a>
+            </div>
+            <div class="nav-icons">
+                <button id="cartToggle" class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="vault-header">
+            <h1 class="vault-title glitch" data-text="Welcome to The Vault">Welcome to The Vault</h1>
+            <div class="vault-logo">SEPHYX</div>
+        </section>
+
+        <section class="vault-grid">
+            <div class="vault-item">
+                <div class="vault-badge">Prototype</div>
+                <img src="https://pixabay.com/get/g19b579c85833982d7f7ac02454f4f40f5861b28fc8d6265fc9cbb48b4886d0478547f6b03e36dc3d95dd2c9b0a4d5d87ca83b6bb4114432fdbc929f3bf47f505_1280.jpg" alt="Prototype Item" style="width: 100%; border-radius: 5px; margin-bottom: 15px;">
+                <h3>Eclipse Drift Prototype</h3>
+                <p>QR 250</p>
+                <p>The future of streetwear, unlocked only for vault members.</p>
+            </div>
+
+            <div class="vault-item">
+                <div class="vault-badge">Vault Exclusive</div>
+                <img src="https://pixabay.com/get/g0741ff1afeef1deb27ab90dbc45bb9614435bc3cb2584ec626a9e939a808b179763a542dd422a6de21390544b1f57827963b54eb0a94e6ce26be30865e500159_1280.jpg" alt="Vault Exclusive" style="width: 100%; border-radius: 5px; margin-bottom: 15px;">
+                <h3>Neon Dawn Hoodie</h3>
+                <p>QR 180</p>
+                <p>Exclusive drop for the chosen ones. Limited to 50 pieces.</p>
+            </div>
+
+            <div class="vault-item">
+                <div class="vault-badge">Prototype</div>
+                <img src="https://pixabay.com/get/gc5354768bf3b381e3068accb86a9f1a69b78cf1de7e075be032f715a38a9354b139393e2efe9b1bac18088ea9ca26db2d027feb4dded61a3cc876ead88f44c42_1280.jpg" alt="Future Tech" style="width: 100%; border-radius: 5px; margin-bottom: 15px;">
+                <h3>Future Tech Tee</h3>
+                <p>QR 95</p>
+                <p>Cyberpunk-inspired design with reactive fibers.</p>
+            </div>
+
+            <div class="vault-item">
+                <div class="vault-badge">Vault Exclusive</div>
+                <img src="https://pixabay.com/get/ge05609656e88af056469871ddbc356bd86af0076e97227b9119bb890f993d09ac1c4ac2c31dd2f37f574769061f0c4837600678c71219a36363435df287d6ae5_1280.jpg" alt="Glitch Cargo" style="width: 100%; border-radius: 5px; margin-bottom: 15px;">
+                <h3>Glitch Cargo Pants</h3>
+                <p>QR 220</p>
+                <p>Multi-dimensional pockets with holographic details.</p>
+            </div>
+
+            <div class="vault-item">
+                <div class="vault-badge">Prototype</div>
+                <img src="https://pixabay.com/get/gb3966b4127b0b35903418e319eadbb199f49334ad3eba6aede18f63724cf1555812a0c3bad1124f4fa89a93c4c47e076241ab1a28d2c2cabe83b6e305b6dc220_1280.jpg" alt="Neural Cap" style="width: 100%; border-radius: 5px; margin-bottom: 15px;">
+                <h3>Neural Interface Cap</h3>
+                <p>QR 85</p>
+                <p>Mind-reading technology meets street fashion.</p>
+            </div>
+        </section>
+
+        <section class="qr-section">
+            <h2>Unlock Sephyx Vision</h2>
+            <div class="qr-code">AR FILTER PREVIEW</div>
+            <p>Scan to unlock the AR experience</p>
+        </section>
+
+        <section class="countdown">
+            <h2>⚡ Next Secret Drop In ⚡</h2>
+            <div class="countdown-timer" id="countdownTimer">00:00:00</div>
+            <p>Prepare for the ultimate streetwear revelation</p>
+        </section>
+
+        <section style="text-align: center; margin: 50px 0;">
+            <button class="drip-pack-btn" onclick="downloadDripPack()">
+                <i class="fas fa-download"></i> Download Drip Pack
+            </button>
+        </section>
+    </main>
+
+    <!-- Cart Drawer -->
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="cart-header">
+            <h3>Your Vault</h3>
+            <button id="closeCart" class="close-btn">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: QR <span id="cartTotal">0</span></div>
+            <button class="checkout-btn" id="checkoutBtn">Buy Now</button>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <span>SEPHYX AI</span>
+                <button class="chatbot-close" id="chatbotClose">&times;</button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="type your vibe...">
+                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Countdown timer
+        function updateCountdown() {
+            const targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + 7); // Next week
+            
+            const now = new Date().getTime();
+            const target = targetDate.getTime();
+            const difference = target - now;
+            
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdownTimer').textContent = 
+                `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function downloadDripPack() {
+            // Create a fake download
+            const link = document.createElement('a');
+            link.href = 'data:text/plain;charset=utf-8,SEPHYX DRIP PACK\n\nExclusive wallpapers, AR filters, and style guides.\n\nWelcome to the future of streetwear.';
+            link.download = 'sephyx-drip-pack.txt';
+            link.click();
+            
+            // Store vault access
+            const storage = new LocalStorage();
+            storage.set('vaultAccess', true);
+        }
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Mark vault as unlocked
+        document.addEventListener('DOMContentLoaded', function() {
+            const storage = new LocalStorage();
+            storage.set('vaultUnlocked', true);
+        });
+    </script>
+</body>
+</html>

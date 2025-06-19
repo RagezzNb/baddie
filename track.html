@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEPHYX - Track Order</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/glitch.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <div id="starfield"></div>
+    <div id="particles"></div>
+
+    <div class="audio-controls">
+        <button id="audioToggle" class="audio-btn">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo glitch" data-text="SEPHYX">SEPHYX</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="lookbook.html" class="nav-link">Lookbook</a>
+                <a href="saved.html" class="nav-link">Saved Fits</a>
+                <a href="customizer.html" class="nav-link">Outfit Generator</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="track.html" class="nav-link active">Track Order</a>
+                <a href="account.html" class="nav-link">Account</a>
+            </div>
+            <div class="nav-icons">
+                <button id="cartToggle" class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="track-hero">
+            <h1 class="page-title glitch" data-text="TRACK ORDER">TRACK ORDER</h1>
+            <p class="page-subtitle">Monitor your drip's journey to your reality</p>
+        </section>
+
+        <section class="track-content">
+            <div class="track-form-container">
+                <div class="track-form">
+                    <h2>Enter Order ID</h2>
+                    <p>Find your order ID in the Instagram DM confirmation</p>
+                    
+                    <form id="trackingForm">
+                        <div class="input-group">
+                            <input type="text" id="orderIdInput" placeholder="e.g. SPHX-240618-001" required>
+                            <button type="submit" class="track-btn">
+                                <i class="fas fa-search"></i>
+                                Track
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="sample-ids">
+                        <p>Try these sample Order IDs:</p>
+                        <div class="sample-list">
+                            <button class="sample-id" onclick="trackSample('SPHX-240618-001')">SPHX-240618-001</button>
+                            <button class="sample-id" onclick="trackSample('SPHX-240617-042')">SPHX-240617-042</button>
+                            <button class="sample-id" onclick="trackSample('SPHX-240616-088')">SPHX-240616-088</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="track-result" id="trackResult" style="display: none;">
+                <!-- Tracking results will be displayed here -->
+            </div>
+
+            <div class="tracking-info">
+                <h2>How Order Tracking Works</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <h3>Order Placed</h3>
+                        <p>You DM us on Instagram with your order details</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3>Confirmation</h3>
+                        <p>We confirm your order and provide tracking ID</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <h3>Packaging</h3>
+                        <p>Your drip is carefully packaged with SEPHYX authenticity seals</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h3>Out for Delivery</h3>
+                        <p>Local courier picks up and heads to your location</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <h3>COD Delivery</h3>
+                        <p>Pay cash on delivery and receive your authentic SEPHYX gear</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3>Cult Member</h3>
+                        <p>Welcome to the SEPHYX cult. Enjoy your future drip!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="delivery-zones">
+                <h2>Qatar Delivery Zones</h2>
+                <div class="zones-grid">
+                    <div class="zone-card">
+                        <h3>Doha Central</h3>
+                        <div class="zone-details">
+                            <p><i class="fas fa-clock"></i> 2-4 hours</p>
+                            <p><i class="fas fa-money-bill"></i> Free delivery</p>
+                        </div>
+                    </div>
+                    
+                    <div class="zone-card">
+                        <h3>Greater Doha</h3>
+                        <div class="zone-details">
+                            <p><i class="fas fa-clock"></i> 4-8 hours</p>
+                            <p><i class="fas fa-money-bill"></i> QR 15</p>
+                        </div>
+                    </div>
+                    
+                    <div class="zone-card">
+                        <h3>Northern Qatar</h3>
+                        <div class="zone-details">
+                            <p><i class="fas fa-clock"></i> 6-12 hours</p>
+                            <p><i class="fas fa-money-bill"></i> QR 25</p>
+                        </div>
+                    </div>
+                    
+                    <div class="zone-card">
+                        <h3>Western Qatar</h3>
+                        <div class="zone-details">
+                            <p><i class="fas fa-clock"></i> 8-24 hours</p>
+                            <p><i class="fas fa-money-bill"></i> QR 35</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Drawer -->
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="cart-header">
+            <h3>Your Vault</h3>
+            <button id="closeCart" class="close-btn">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: QR <span id="cartTotal">0</span></div>
+            <button class="checkout-btn" id="checkoutBtn">Buy Now</button>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <span>SEPHYX AI</span>
+                <button class="chatbot-close" id="chatbotClose">&times;</button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="type your vibe...">
+                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        const trackingStatuses = [
+            {
+                status: 'Out for delivery',
+                icon: 'fas fa-truck',
+                color: 'var(--neon-cyan)',
+                eta: 'Tonight',
+                details: 'Your drip is on the way! Driver will call 15 minutes before arrival.',
+                percentage: 90
+            },
+            {
+                status: 'COD – Get Ready',
+                icon: 'fas fa-hand-holding-usd',
+                color: 'var(--neon-pink)',
+                eta: '2-4 hours',
+                details: 'Package is with courier. Have exact cash ready for smooth delivery.',
+                percentage: 75
+            },
+            {
+                status: 'Packaging Complete',
+                icon: 'fas fa-box',
+                color: '#ffaa00',
+                eta: '6-8 hours',
+                details: 'Your order is packaged with SEPHYX authenticity seals and ready for pickup.',
+                percentage: 60
+            },
+            {
+                status: 'Order Confirmed',
+                icon: 'fas fa-check-circle',
+                color: '#00ff00',
+                eta: '12-24 hours',
+                details: 'Order confirmed via Instagram DM. Processing has begun.',
+                percentage: 30
+            },
+            {
+                status: 'Payment Pending',
+                icon: 'fas fa-clock',
+                color: '#ff6600',
+                eta: 'Waiting',
+                details: 'Waiting for payment confirmation via Instagram DM.',
+                percentage: 15
+            }
+        ];
+
+        document.getElementById('trackingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const orderId = document.getElementById('orderIdInput').value.trim();
+            if (orderId) {
+                trackOrder(orderId);
+            }
+        });
+
+        function trackSample(orderId) {
+            document.getElementById('orderIdInput').value = orderId;
+            trackOrder(orderId);
+        }
+
+        function trackOrder(orderId) {
+            const resultContainer = document.getElementById('trackResult');
+            
+            // Simulate loading
+            resultContainer.style.display = 'block';
+            resultContainer.innerHTML = `
+                <div class="tracking-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Accessing SEPHYX delivery network...</p>
+                </div>
+            `;
+
+            // Scroll to result
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+
+            setTimeout(() => {
+                const randomStatus = trackingStatuses[Math.floor(Math.random() * trackingStatuses.length)];
+                displayTrackingResult(orderId, randomStatus);
+            }, 1500);
+        }
+
+        function displayTrackingResult(orderId, statusData) {
+            const resultContainer = document.getElementById('trackResult');
+            const orderDate = new Date();
+            orderDate.setDate(orderDate.getDate() - Math.floor(Math.random() * 3));
+
+            resultContainer.innerHTML = `
+                <div class="tracking-header">
+                    <h2>Order ${orderId}</h2>
+                    <div class="order-meta">
+                        <p>Placed: ${orderDate.toLocaleDateString()}</p>
+                        <p>Via: Instagram DM</p>
+                    </div>
+                </div>
+
+                <div class="status-card" style="border-color: ${statusData.color};">
+                    <div class="status-icon" style="color: ${statusData.color};">
+                        <i class="${statusData.icon}"></i>
+                    </div>
+                    <div class="status-info">
+                        <h3 style="color: ${statusData.color};">${statusData.status}</h3>
+                        <p class="status-eta">ETA: ${statusData.eta}</p>
+                        <p class="status-details">${statusData.details}</p>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${statusData.percentage}%; background: ${statusData.color};"></div>
+                </div>
+
+                <div class="order-items">
+                    <h3>Items in this order:</h3>
+                    <div class="order-item">
+                        <img src="https://pixabay.com/get/g19b579c85833982d7f7ac02454f4f40f5861b28fc8d6265fc9cbb48b4886d0478547f6b03e36dc3d95dd2c9b0a4d5d87ca83b6bb4114432fdbc929f3bf47f505_1280.jpg" alt="Product">
+                        <div class="item-details">
+                            <h4>Eclipse Drift Hoodie</h4>
+                            <p>Size: M | Qty: 1 | QR 180</p>
+                        </div>
+                    </div>
+                    <div class="order-item">
+                        <img src="https://pixabay.com/get/gc5354768bf3b381e3068accb86a9f1a69b78cf1de7e075be032f715a38a9354b139393e2efe9b1bac18088ea9ca26db2d027feb4dded61a3cc876ead88f44c42_1280.jpg" alt="Product">
+                        <div class="item-details">
+                            <h4>Future Tech Tee</h4>
+                            <p>Size: L | Qty: 1 | QR 95</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="delivery-info">
+                    <h3>Delivery Details:</h3>
+                    <div class="delivery-grid">
+                        <div class="delivery-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Address:</strong>
+                                <p>Doha, Qatar (Hidden for privacy)</p>
+                            </div>
+                        </div>
+                        <div class="delivery-detail">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Contact:</strong>
+                                <p>+974-****-**${Math.floor(Math.random() * 100).toString().padStart(2, '0')}</p>
+                            </div>
+                        </div>
+                        <div class="delivery-detail">
+                            <i class="fas fa-money-bill"></i>
+                            <div>
+                                <strong>Total COD:</strong>
+                                <p>QR 275</p>
+                            </div>
+                        </div>
+                        <div class="delivery-detail">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>Authenticity:</strong>
+                                <p>NFC + Blockchain verified</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tracking-actions">
+                    <button class="action-btn primary" onclick="contactSupport('${orderId}')">
+                        <i class="fas fa-comments"></i> Contact Support
+                    </button>
+                    <button class="action-btn secondary" onclick="shareTracking('${orderId}')">
+                        <i class="fas fa-share"></i> Share Status
+                    </button>
+                </div>
+            `;
+
+            // Store tracking in localStorage
+            const storage = new LocalStorage();
+            const trackingHistory = storage.get('trackingHistory', []);
+            trackingHistory.push({
+                orderId,
+                status: statusData.status,
+                timestamp: new Date().toISOString()
+            });
+            storage.set('trackingHistory', trackingHistory.slice(-10)); // Keep last 10
+        }
+
+        function contactSupport(orderId) {
+            const message = `Hi SEPHYX, I need help with order ${orderId}`;
+            const instagramUrl = `https://instagram.com/direct/new/?text=${encodeURIComponent(message)}`;
+            window.open(instagramUrl, '_blank');
+        }
+
+        function shareTracking(orderId) {
+            const shareText = `Tracking my SEPHYX order ${orderId} 🚀 Future drip incoming! #SephyxDelivery`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'SEPHYX Order Tracking',
+                    text: shareText
+                });
+            } else {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('Share text copied to clipboard!');
+                });
+            }
+        }
+    </script>
+
+    <style>
+        .track-hero {
+            text-align: center;
+            margin: 100px 0 80px;
+        }
+
+        .track-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .track-form-container {
+            margin-bottom: 60px;
+        }
+
+        .track-form {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .track-form h2 {
+            color: var(--neon-cyan);
+            margin-bottom: 15px;
+            font-size: 2rem;
+        }
+
+        .track-form > p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+
+        .input-group input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 25px;
+            padding: 15px 20px;
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+        }
+
+        .track-btn {
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            border: none;
+            border-radius: 25px;
+            padding: 15px 25px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .track-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5);
+        }
+
+        .sample-ids p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+        }
+
+        .sample-list {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .sample-id {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 8px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: monospace;
+        }
+
+        .sample-id:hover {
+            background: var(--neon-cyan);
+            color: black;
+        }
+
+        .track-result {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-pink);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 60px;
+        }
+
+        .tracking-loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--neon-cyan);
+        }
+
+        .tracking-loading i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .tracking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--neon-pink);
+        }
+
+        .tracking-header h2 {
+            color: var(--neon-pink);
+            font-size: 1.8rem;
+        }
+
+        .order-meta p {
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .status-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .status-icon {
+            font-size: 2.5rem;
+        }
+
+        .status-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .status-eta {
+            color: var(--neon-cyan);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .status-details {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.4;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .order-items h3,
+        .delivery-info h3 {
+            color: var(--neon-cyan);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .order-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .item-details h4 {
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .item-details p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .delivery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .delivery-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .delivery-detail i {
+            color: var(--neon-cyan);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+
+        .delivery-detail strong {
+            color: white;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .delivery-detail p {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+        }
+
+        .tracking-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            color: black;
+        }
+
+        .action-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+
+        .action-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .tracking-info {
+            margin-bottom: 60px;
+        }
+
+        .tracking-info h2 {
+            text-align: center;
+            color: var(--neon-cyan);
+            margin-bottom: 40px;
+            font-size: 2rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .info-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            color: black;
+        }
+
+        .info-card h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .info-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+
+        .delivery-zones {
+            margin-bottom: 60px;
+        }
+
+        .delivery-zones h2 {
+            text-align: center;
+            color: var(--neon-pink);
+            margin-bottom: 40px;
+            font-size: 2rem;
+        }
+
+        .zones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .zone-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-pink);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .zone-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(255, 0, 255, 0.3);
+        }
+
+        .zone-card h3 {
+            color: var(--neon-pink);
+            margin-bottom: 20px;
+        }
+
+        .zone-details p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .zone-details i {
+            color: var(--neon-cyan);
+        }
+
+        @media (max-width: 768px) {
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .tracking-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .status-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .tracking-actions {
+                flex-direction: column;
+            }
+            
+            .sample-list {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</body>
+</html>

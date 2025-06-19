@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEPHYX - drip designed for the future.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/glitch-effects.css">
+</head>
+<body>
+    <!-- Loader Screen -->
+    <div id="loader" class="loader">
+        <div class="loader-content">
+            <div class="glitch-logo">
+                <span data-text="SEPHYX">SEPHYX</span>
+            </div>
+            <div class="loader-text">SYSTEM INITIATING...</div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Starfield Background -->
+    <div id="starfield" class="scanlines"></div>
+    
+    <!-- Particles -->
+    <div id="particles"></div>
+    
+    <!-- Matrix Rain Effect -->
+    <div class="matrix-rain" id="matrix-rain"></div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor-trail"></div>
+
+    <!-- Audio Control -->
+    <div class="audio-control">
+        <button id="audio-toggle" class="audio-btn">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo glitch-text-enhanced" data-text="SEPHYX">SEPHYX</div>
+            <ul class="nav-menu">
+                <li><a href="#" data-page="home">Home</a></li>
+                <li><a href="#" data-page="shop">Shop</a></li>
+                <li><a href="#" data-page="lookbook">Lookbook</a></li>
+                <li><a href="#" data-page="saved">Saved Fits</a></li>
+                <li><a href="#" data-page="customizer">Outfit Generator</a></li>
+                <li><a href="#" data-page="about">About</a></li>
+                <li><a href="#" data-page="contact">Contact</a></li>
+                <li><a href="#" data-page="track">Track Order</a></li>
+                <li><a href="#" data-page="account">Account</a></li>
+            </ul>
+            <div class="cart-icon" id="cart-toggle">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Glitch Alerts -->
+    <div class="glitch-alerts" id="glitch-alerts"></div>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Home Page -->
+        <div id="home-page" class="page active">
+            <div class="hero-section">
+                <h1 class="hero-title glitch-text-enhanced holographic" data-text="drip designed for the future.">
+                    drip designed for the future.
+                </h1>
+                <button class="cta-button glitch-btn" data-page="shop">
+                    <span>Enter the Vault</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Shop Page -->
+        <div id="shop-page" class="page">
+            <div class="shop-header">
+                <h2 class="page-title glitch-text-enhanced" data-text="THE VAULT">THE VAULT</h2>
+                <div class="shop-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="hoodies">Hoodies</button>
+                    <button class="filter-btn" data-filter="tees">Tees</button>
+                    <button class="filter-btn" data-filter="bottoms">Bottoms</button>
+                    <button class="filter-btn" data-filter="accessories">Accessories</button>
+                </div>
+            </div>
+            <div class="product-grid" id="product-grid">
+                <!-- Products will be dynamically generated -->
+            </div>
+        </div>
+
+        <!-- Lookbook Page -->
+        <div id="lookbook-page" class="page">
+            <h2 class="page-title glitch-text-enhanced" data-text="STREET LEGENDS">STREET LEGENDS</h2>
+            <div class="lookbook-grid">
+                <div class="lookbook-item">
+                    <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671d66?w=600&h=800&fit=crop" alt="Urban Rebel Look">
+                    <div class="lookbook-overlay">
+                        <h3>URBAN REBEL</h3>
+                        <p>Shadow Tech Vest + Quantum Cargos</p>
+                    </div>
+                </div>
+                <div class="lookbook-item">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop" alt="Neon Nights Look">
+                    <div class="lookbook-overlay">
+                        <h3>NEON NIGHTS</h3>
+                        <p>Eclipse Drift Hoodie + Future Chain</p>
+                    </div>
+                </div>
+                <div class="lookbook-item">
+                    <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?w=600&h=800&fit=crop" alt="Cyber Punk Look">
+                    <div class="lookbook-overlay">
+                        <h3>CYBER PUNK</h3>
+                        <p>Void Walker Jacket + Matrix Shorts</p>
+                    </div>
+                </div>
+                <div class="lookbook-item">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=800&fit=crop" alt="Street King Look">
+                    <div class="lookbook-overlay">
+                        <h3>STREET KING</h3>
+                        <p>Neural Interface Mask + Neon Dawn Tee</p>
+                    </div>
+                </div>
+                <div class="lookbook-item">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=800&fit=crop" alt="Digital Nomad Look">
+                    <div class="lookbook-overlay">
+                        <h3>DIGITAL NOMAD</h3>
+                        <p>Cyber Punk Tee + Rebel Beanie</p>
+                    </div>
+                </div>
+                <div class="lookbook-item">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&h=800&fit=crop" alt="Future Cult Look">
+                    <div class="lookbook-overlay">
+                        <h3>FUTURE CULT</h3>
+                        <p>Complete SEPHYX Arsenal</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Saved Fits Page -->
+        <div id="saved-page" class="page">
+            <h2 class="page-title glitch-text-enhanced" data-text="ARSENAL VAULT">ARSENAL VAULT</h2>
+            <p class="page-subtitle">Your locked and loaded streetwear collection.</p>
+            <div class="saved-grid" id="saved-grid">
+                <!-- Saved items will be dynamically generated -->
+            </div>
+        </div>
+
+        <!-- Outfit Customizer Page -->
+        <div id="customizer-page" class="page">
+            <h2 class="page-title">OUTFIT GENERATOR</h2>
+            <div class="customizer-container">
+                <div class="customizer-controls">
+                    <button class="glitch-btn" id="randomize-fit">Randomize Fit</button>
+                    <button class="glitch-btn" id="save-fit">Save My Fit</button>
+                    <button class="glitch-btn" id="share-fit">Share This Drip</button>
+                </div>
+                <div class="outfit-display" id="outfit-display">
+                    <div class="outfit-slot" data-type="hoodie">
+                        <span>Select Hoodie</span>
+                    </div>
+                    <div class="outfit-slot" data-type="bottoms">
+                        <span>Select Bottoms</span>
+                    </div>
+                    <div class="outfit-slot" data-type="accessories">
+                        <span>Select Accessories</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about-page" class="page">
+            <h2 class="page-title">ABOUT SEPHYX</h2>
+            <div class="about-content">
+                <p>This ain't a store. It's a digital street cult.</p>
+                <p>SEPHYX is the future of streetwear - where cyberpunk meets culture, where every piece tells a story of rebellion and innovation.</p>
+                <div class="cult-stats">
+                    <div class="stat">
+                        <span class="stat-number">2025</span>
+                        <span class="stat-label">Founded</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">∞</span>
+                        <span class="stat-label">Cult Members</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">Qatar</span>
+                        <span class="stat-label">Base</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact-page" class="page">
+            <h2 class="page-title">CONTACT</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Based in Qatar – COD only</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-instagram"></i>
+                    <span>@sephyxofficial</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>DM to order, collab, or ask anything</span>
+                </div>
+            </div>
+            <div class="refund-policy">
+                <h3>Refund Policy</h3>
+                <p>All sales final. We're a cult, not a charity.</p>
+            </div>
+        </div>
+
+        <!-- Track Order Page -->
+        <div id="track-page" class="page">
+            <h2 class="page-title">TRACK ORDER</h2>
+            <div class="track-container">
+                <input type="text" id="order-id" placeholder="Enter Order ID">
+                <button class="glitch-btn" id="track-btn">Track</button>
+                <div class="track-result" id="track-result"></div>
+            </div>
+        </div>
+
+        <!-- Account Page -->
+        <div id="account-page" class="page">
+            <div class="profile-header">
+                <h2 class="page-title glitch-text-enhanced" data-text="REBEL PROFILE">REBEL PROFILE</h2>
+                <div class="profile-subtitle">Build your street legend</div>
+            </div>
+            
+            <div class="profile-container">
+                <!-- Profile Picture Section -->
+                <div class="profile-picture-section">
+                    <div class="profile-avatar" id="profile-avatar">
+                        <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?w=200&h=200&fit=crop&crop=face" alt="Profile Avatar" id="avatar-image">
+                        <div class="avatar-overlay">
+                            <i class="fas fa-camera"></i>
+                            <span>Change Avatar</span>
+                        </div>
+                    </div>
+                    <div class="avatar-options" id="avatar-options">
+                        <div class="preset-avatars">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" data-avatar="1">
+                            <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?w=80&h=80&fit=crop&crop=face" data-avatar="2">
+                            <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671d66?w=80&h=80&fit=crop&crop=face" data-avatar="3">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face" data-avatar="4">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" data-avatar="5">
+                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=80&h=80&fit=crop&crop=face" data-avatar="6">
+                        </div>
+                        <button class="glitch-btn upload-btn">Upload Custom</button>
+                    </div>
+                </div>
+
+                <!-- Profile Info Section -->
+                <div class="profile-info-section">
+                    <div class="profile-field">
+                        <label>Street Name</label>
+                        <input type="text" id="profile-username" placeholder="Enter your street alias" value="StreetRebel">
+                        <div class="field-icon"><i class="fas fa-user"></i></div>
+                    </div>
+
+                    <div class="profile-field">
+                        <label>Territory</label>
+                        <input type="text" id="profile-location" placeholder="Your hood" value="Qatar Underground">
+                        <div class="field-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    </div>
+
+                    <div class="profile-field">
+                        <label>Rebel Bio</label>
+                        <textarea id="profile-bio" placeholder="Tell your street story...">"Living the cyberpunk dream in the digital underground. Fashion is rebellion."</textarea>
+                        <div class="field-icon"><i class="fas fa-edit"></i></div>
+                    </div>
+
+                    <div class="profile-field">
+                        <label>Style Tags</label>
+                        <div class="style-tags" id="style-tags">
+                            <span class="tag active" data-tag="cyberpunk">#cyberpunk</span>
+                            <span class="tag active" data-tag="streetwear">#streetwear</span>
+                            <span class="tag" data-tag="techwear">#techwear</span>
+                            <span class="tag" data-tag="grunge">#grunge</span>
+                            <span class="tag" data-tag="baggy">#baggy</span>
+                            <span class="tag" data-tag="minimalist">#minimalist</span>
+                            <span class="tag" data-tag="futuristic">#futuristic</span>
+                            <span class="tag" data-tag="urban">#urban</span>
+                        </div>
+                        <input type="text" id="custom-tag" placeholder="Add custom tag...">
+                    </div>
+                </div>
+
+                <!-- Loyalty Status Section -->
+                <div class="loyalty-section">
+                    <div class="loyalty-badge" id="loyalty-badge">
+                        <div class="badge-icon">⚡</div>
+                        <div class="badge-info">
+                            <span class="badge-title">STREET STARTER</span>
+                            <span class="badge-subtitle">Building street cred</span>
+                        </div>
+                        <div class="badge-points">
+                            <span id="loyalty-points">150</span>
+                            <small>pts</small>
+                        </div>
+                    </div>
+                    <div class="loyalty-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%"></div>
+                        </div>
+                        <div class="progress-text">350 pts to <strong>DRIP DEALER</strong></div>
+                    </div>
+                </div>
+
+                <!-- Saved Fits Section -->
+                <div class="saved-fits-section">
+                    <div class="section-header">
+                        <h3>My Arsenal</h3>
+                        <span class="fit-count" id="fit-count">5 fits locked</span>
+                    </div>
+                    <div class="saved-fits-grid" id="saved-fits-preview">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                    <button class="glitch-btn view-all-fits" onclick="navigateToPage('saved')">
+                        View Full Arsenal
+                    </button>
+                </div>
+
+                <!-- Actions Section -->
+                <div class="profile-actions">
+                    <button class="glitch-btn save-profile" id="save-profile">
+                        <i class="fas fa-save"></i>
+                        Save Changes
+                    </button>
+                    <button class="glitch-btn export-profile" id="export-profile">
+                        <i class="fas fa-download"></i>
+                        Export Data
+                    </button>
+                    <button class="glitch-btn reset-profile" id="reset-profile">
+                        <i class="fas fa-trash"></i>
+                        Reset Profile
+                    </button>
+                </div>
+
+                <!-- Stats Section -->
+                <div class="profile-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-orders">12</div>
+                        <div class="stat-label">Orders Placed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-saved">8</div>
+                        <div class="stat-label">Fits Saved</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="days-active">45</div>
+                        <div class="stat-label">Days in Cult</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vault Page (Secret) -->
+        <div id="vault-page" class="page vault-page">
+            <div class="vault-header">
+                <h2 class="vault-title glitch-text" data-text="Welcome to The Vault">Welcome to The Vault</h2>
+                <div class="rotating-logo">SEPHYX</div>
+            </div>
+            <div class="vault-content">
+                <div class="vault-items">
+                    <div class="vault-item">
+                        <img src="https://pixabay.com/get/g19b579c85833982d7f7ac02454f4f40f5861b28fc8d6265fc9cbb48b4886d0478547f6b03e36dc3d95dd2c9b0a4d5d87ca83b6bb4114432fdbc929f3bf47f505_1280.jpg" alt="Prototype Item">
+                        <div class="vault-badge">PROTOTYPE</div>
+                        <h3>Neural Hoodie</h3>
+                    </div>
+                    <div class="vault-item">
+                        <img src="https://pixabay.com/get/g0741ff1afeef1deb27ab90dbc45bb9614435bc3cb2584ec626a9e939a808b179763a542dd422a6de21390544b1f57827963b54eb0a94e6ce26be30865e500159_1280.jpg" alt="Vault Exclusive">
+                        <div class="vault-badge">VAULT EXCLUSIVE</div>
+                        <h3>Quantum Tee</h3>
+                    </div>
+                </div>
+                <div class="vault-countdown">
+                    <span>⚡ Next Secret Drop In: <span id="countdown">72:45:12</span> ⚡</span>
+                </div>
+                <button class="glitch-btn vault-btn">Download Drip Pack</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Cart Drawer -->
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3>CART</h3>
+            <button class="cart-close" id="cart-close">×</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be dynamically generated -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total" id="cart-total">Total: QR 0</div>
+            <button class="glitch-btn cart-checkout" id="cart-checkout">Buy Now</button>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div class="modal" id="quick-view-modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-body" id="modal-body">
+                <!-- Modal content will be dynamically generated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-widget" id="chatbot-widget">
+        <div class="chatbot-button" id="chatbot-button">
+            <i class="fas fa-comments"></i>
+        </div>
+        <div class="chatbot-window" id="chatbot-window">
+            <div class="chatbot-header">
+                <span>SEPHYX AI</span>
+                <button class="chatbot-close" id="chatbot-close">×</button>
+            </div>
+            <div class="chatbot-messages" id="chatbot-messages">
+                <div class="bot-message">yo what's good? need some drip advice? 💀</div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbot-input" placeholder="Type your message...">
+                <button id="chatbot-send">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="background-audio" loop>
+        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
+    </audio>
+
+    <script src="js/database.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/matrix-effects.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
+</body>
+</html>

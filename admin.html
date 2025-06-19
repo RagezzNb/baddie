@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEPHYX Admin - Database Control Panel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/glitch-effects.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .admin-panel {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .admin-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .admin-card:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .admin-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-color);
+        }
+
+        .stat-value {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .admin-button {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-family: 'Orbitron', monospace;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .admin-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.4);
+        }
+
+        .admin-button.danger {
+            background: #ff4444;
+        }
+
+        .admin-button.danger:hover {
+            background: #ff6666;
+        }
+
+        .database-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .database-table th,
+        .database-table td {
+            border: 1px solid var(--primary-color);
+            padding: 0.8rem;
+            text-align: left;
+        }
+
+        .database-table th {
+            background: rgba(0, 255, 255, 0.2);
+            color: var(--primary-color);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .database-table td {
+            color: var(--text-color);
+        }
+
+        .logs-container {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 1rem;
+            height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .log-entry {
+            margin: 0.2rem 0;
+            padding: 0.3rem;
+            border-radius: 3px;
+        }
+
+        .log-info {
+            color: var(--primary-color);
+        }
+
+        .log-warning {
+            color: #ffaa00;
+        }
+
+        .log-error {
+            color: #ff4444;
+        }
+
+        .file-input {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            padding: 0.5rem;
+            color: var(--text-color);
+            font-family: 'Orbitron', monospace;
+            margin: 0.5rem 0;
+            width: 100%;
+        }
+
+        .json-viewer {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            white-space: pre;
+            overflow: auto;
+            max-height: 200px;
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .admin-title {
+            font-size: 3rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-subtitle {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader" id="loader">
+        <div class="loader-text glitch-text" data-text="ACCESSING MAINFRAME">ACCESSING MAINFRAME</div>
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+
+    <div id="app" style="display: none;">
+        <div class="admin-panel">
+            <div class="admin-header">
+                <h1 class="admin-title glitch-text-enhanced" data-text="SEPHYX DATABASE">SEPHYX DATABASE</h1>
+                <p class="admin-subtitle">Static Database Control Panel</p>
+            </div>
+
+            <div class="admin-grid">
+                <!-- Database Statistics -->
+                <div class="admin-card">
+                    <h3><i class="fas fa-chart-bar"></i> Database Statistics</h3>
+                    <div id="db-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Total Size:</span>
+                            <span class="stat-value" id="total-size">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Tables:</span>
+                            <span class="stat-value" id="table-count">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Users:</span>
+                            <span class="stat-value" id="user-count">1</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Cart Items:</span>
+                            <span class="stat-value" id="cart-count">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Saved Items:</span>
+                            <span class="stat-value" id="saved-count">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Custom Fits:</span>
+                            <span class="stat-value" id="fits-count">Loading...</span>
+                        </div>
+                    </div>
+                    <button class="admin-button" onclick="refreshStats()">
+                        <i class="fas fa-refresh"></i> Refresh Stats
+                    </button>
+                </div>
+
+                <!-- Database Operations -->
+                <div class="admin-card">
+                    <h3><i class="fas fa-database"></i> Database Operations</h3>
+                    <button class="admin-button" onclick="backupDatabase()">
+                        <i class="fas fa-download"></i> Export Database
+                    </button>
+                    <input type="file" id="import-file" class="file-input" accept=".json" style="display: none;">
+                    <button class="admin-button" onclick="document.getElementById('import-file').click()">
+                        <i class="fas fa-upload"></i> Import Database
+                    </button>
+                    <button class="admin-button" onclick="optimizeDatabase()">
+                        <i class="fas fa-cogs"></i> Optimize Database
+                    </button>
+                    <button class="admin-button danger" onclick="clearDatabase()">
+                        <i class="fas fa-trash"></i> Clear All Data
+                    </button>
+                </div>
+
+                <!-- User Management -->
+                <div class="admin-card">
+                    <h3><i class="fas fa-users"></i> User Management</h3>
+                    <div id="user-info">
+                        <div class="stat-item">
+                            <span class="stat-label">Username:</span>
+                            <span class="stat-value" id="user-name">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Loyalty Points:</span>
+                            <span class="stat-value" id="user-points">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Loyalty Rank:</span>
+                            <span class="stat-value" id="user-rank">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Join Date:</span>
+                            <span class="stat-value" id="user-join">Loading...</span>
+                        </div>
+                    </div>
+                    <button class="admin-button" onclick="addLoyaltyPoints()">
+                        <i class="fas fa-plus"></i> Add 100 Points
+                    </button>
+                    <button class="admin-button" onclick="resetUserData()">
+                        <i class="fas fa-user-times"></i> Reset User
+                    </button>
+                </div>
+
+                <!-- Table Browser -->
+                <div class="admin-card" style="grid-column: 1 / -1;">
+                    <h3><i class="fas fa-table"></i> Table Browser</h3>
+                    <div>
+                        <select id="table-selector" style="background: rgba(0,0,0,0.8); border: 2px solid var(--primary-color); color: var(--text-color); padding: 0.5rem; border-radius: 5px; font-family: 'Orbitron', monospace;">
+                            <option value="">Select Table</option>
+                            <option value="users">Users</option>
+                            <option value="cart">Shopping Cart</option>
+                            <option value="saved">Saved Items</option>
+                            <option value="orders">Order History</option>
+                            <option value="fits">Custom Fits</option>
+                            <option value="timeline">User Timeline</option>
+                            <option value="settings">Settings</option>
+                            <option value="analytics">Analytics</option>
+                        </select>
+                        <button class="admin-button" onclick="loadTable()">
+                            <i class="fas fa-search"></i> Load Table
+                        </button>
+                        <button class="admin-button danger" onclick="clearTable()">
+                            <i class="fas fa-trash"></i> Clear Table
+                        </button>
+                    </div>
+                    <div id="table-content" style="margin-top: 1rem;"></div>
+                </div>
+
+                <!-- System Logs -->
+                <div class="admin-card" style="grid-column: 1 / -1;">
+                    <h3><i class="fas fa-terminal"></i> System Logs</h3>
+                    <div class="logs-container" id="system-logs">
+                        <div class="log-entry log-info">[INFO] Database system initialized</div>
+                        <div class="log-entry log-info">[INFO] Static database ready for operations</div>
+                        <div class="log-entry log-info">[INFO] Admin panel loaded successfully</div>
+                    </div>
+                    <button class="admin-button" onclick="clearLogs()">
+                        <i class="fas fa-broom"></i> Clear Logs
+                    </button>
+                    <button class="admin-button" onclick="exportLogs()">
+                        <i class="fas fa-file-export"></i> Export Logs
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/database.js"></script>
+    <script src="js/storage.js"></script>
+    <script>
+        // Admin Panel JavaScript
+        let logs = [];
+
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] [${type.toUpperCase()}] ${message}`;
+            logs.push(logEntry);
+            
+            const logsContainer = document.getElementById('system-logs');
+            const logDiv = document.createElement('div');
+            logDiv.className = `log-entry log-${type}`;
+            logDiv.textContent = logEntry;
+            logsContainer.appendChild(logDiv);
+            logsContainer.scrollTop = logsContainer.scrollHeight;
+        }
+
+        function refreshStats() {
+            if (!window.sephyxDB) {
+                addLog('Database not ready', 'error');
+                return;
+            }
+
+            const stats = window.sephyxDB.getStats();
+            
+            document.getElementById('total-size').textContent = stats.totalSizeFormatted;
+            document.getElementById('table-count').textContent = Object.keys(stats.tables).length;
+            
+            // Update individual table counts
+            document.getElementById('cart-count').textContent = stats.tables.cart?.records || 0;
+            document.getElementById('saved-count').textContent = stats.tables.saved?.records || 0;
+            document.getElementById('fits-count').textContent = stats.tables.fits?.records || 0;
+
+            // Update user info
+            const user = window.sephyxDB.getUser();
+            if (user) {
+                document.getElementById('user-name').textContent = user.username || 'Unknown';
+                document.getElementById('user-points').textContent = user.loyaltyPoints || 0;
+                document.getElementById('user-rank').textContent = user.loyaltyRank || 'STREET STARTER';
+                document.getElementById('user-join').textContent = user.joinDate ? 
+                    new Date(user.joinDate).toLocaleDateString() : 'Unknown';
+            }
+
+            addLog('Statistics refreshed');
+        }
+
+        function backupDatabase() {
+            try {
+                if (!window.sephyxDB) {
+                    addLog('Database not ready', 'error');
+                    return;
+                }
+
+                const success = window.sephyxDB.exportDatabase();
+                if (success) {
+                    addLog('Database exported successfully');
+                } else {
+                    addLog('Database export failed', 'error');
+                }
+            } catch (error) {
+                addLog(`Export error: ${error.message}`, 'error');
+            }
+        }
+
+        function optimizeDatabase() {
+            // Simulate database optimization
+            addLog('Starting database optimization...');
+            
+            setTimeout(() => {
+                addLog('Cleaning up unused data...');
+            }, 1000);
+            
+            setTimeout(() => {
+                addLog('Compacting storage...');
+            }, 2000);
+            
+            setTimeout(() => {
+                addLog('Database optimization completed');
+                refreshStats();
+            }, 3000);
+        }
+
+        function clearDatabase() {
+            if (confirm('Are you sure you want to clear ALL database data? This cannot be undone!')) {
+                if (confirm('This will delete everything including user profiles, cart, and saved items. Continue?')) {
+                    try {
+                        if (window.sephyxDB) {
+                            window.sephyxDB.clearDatabase();
+                            addLog('Database cleared successfully', 'warning');
+                        } else {
+                            // Fallback to localStorage clearing
+                            Object.keys(localStorage).forEach(key => {
+                                if (key.startsWith('sephyx_')) {
+                                    localStorage.removeItem(key);
+                                }
+                            });
+                            addLog('LocalStorage cleared', 'warning');
+                        }
+                        refreshStats();
+                    } catch (error) {
+                        addLog(`Clear error: ${error.message}`, 'error');
+                    }
+                }
+            }
+        }
+
+        function addLoyaltyPoints() {
+            try {
+                if (!window.sephyxDB) {
+                    addLog('Database not ready', 'error');
+                    return;
+                }
+
+                const result = window.sephyxDB.addLoyaltyPoints(100);
+                addLog(`Added 100 loyalty points. New total: ${result.points}, Rank: ${result.rank}`);
+                refreshStats();
+            } catch (error) {
+                addLog(`Error adding points: ${error.message}`, 'error');
+            }
+        }
+
+        function resetUserData() {
+            if (confirm('Reset user data? This will clear profile, but keep cart and saved items.')) {
+                try {
+                    if (window.sephyxDB) {
+                        window.sephyxDB.clearTable('users');
+                        window.sephyxDB.initializeTables(); // Reinitialize with defaults
+                        addLog('User data reset to default');
+                    }
+                    refreshStats();
+                } catch (error) {
+                    addLog(`Reset error: ${error.message}`, 'error');
+                }
+            }
+        }
+
+        function loadTable() {
+            const selector = document.getElementById('table-selector');
+            const tableName = selector.value;
+            
+            if (!tableName) {
+                addLog('Please select a table', 'warning');
+                return;
+            }
+
+            try {
+                const data = window.sephyxDB ? window.sephyxDB.get(tableName) : null;
+                const container = document.getElementById('table-content');
+                
+                if (!data) {
+                    container.innerHTML = '<p style="color: var(--text-color);">No data found</p>';
+                    return;
+                }
+
+                // Create JSON viewer
+                container.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin-bottom: 1rem;">Table: ${tableName.toUpperCase()}</h4>
+                    <div class="json-viewer">${JSON.stringify(data, null, 2)}</div>
+                `;
+
+                addLog(`Loaded table: ${tableName}`);
+            } catch (error) {
+                addLog(`Error loading table: ${error.message}`, 'error');
+            }
+        }
+
+        function clearTable() {
+            const selector = document.getElementById('table-selector');
+            const tableName = selector.value;
+            
+            if (!tableName) {
+                addLog('Please select a table', 'warning');
+                return;
+            }
+
+            if (confirm(`Clear all data from table "${tableName}"?`)) {
+                try {
+                    if (window.sephyxDB) {
+                        window.sephyxDB.clearTable(tableName);
+                        addLog(`Cleared table: ${tableName}`, 'warning');
+                        document.getElementById('table-content').innerHTML = '';
+                    }
+                    refreshStats();
+                } catch (error) {
+                    addLog(`Error clearing table: ${error.message}`, 'error');
+                }
+            }
+        }
+
+        function clearLogs() {
+            document.getElementById('system-logs').innerHTML = '';
+            logs = [];
+            addLog('Logs cleared');
+        }
+
+        function exportLogs() {
+            const logData = logs.join('\n');
+            const blob = new Blob([logData], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `sephyx_logs_${new Date().toISOString().split('T')[0]}.txt`;
+            link.click();
+            URL.revokeObjectURL(url);
+            addLog('Logs exported');
+        }
+
+        // File import handler
+        document.getElementById('import-file').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            try {
+                addLog('Starting database import...');
+                
+                if (window.sephyxDB) {
+                    const success = await window.sephyxDB.importDatabase(file);
+                    if (success) {
+                        addLog('Database imported successfully');
+                        refreshStats();
+                    } else {
+                        addLog('Database import failed', 'error');
+                    }
+                } else {
+                    addLog('Database system not available', 'error');
+                }
+            } catch (error) {
+                addLog(`Import error: ${error.message}`, 'error');
+            }
+        });
+
+        // Initialize admin panel
+        window.addEventListener('load', () => {
+            // Hide loader
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('app').style.display = 'block';
+
+            // Wait for database to initialize
+            const initCheck = setInterval(() => {
+                if (window.sephyxDB && window.sephyxDB.initialized) {
+                    clearInterval(initCheck);
+                    addLog('Database connection established');
+                    refreshStats();
+                }
+            }, 100);
+
+            // Auto-refresh stats every 30 seconds
+            setInterval(refreshStats, 30000);
+        });
+
+        // Add some style for better admin panel appearance
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add glitch effects to title
+            const title = document.querySelector('.admin-title');
+            if (title) {
+                setInterval(() => {
+                    title.classList.add('glitch-active');
+                    setTimeout(() => title.classList.remove('glitch-active'), 200);
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>

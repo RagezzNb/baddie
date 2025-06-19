@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEPHYX - Account</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/glitch.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <div id="starfield"></div>
+    <div id="particles"></div>
+
+    <div class="audio-controls">
+        <button id="audioToggle" class="audio-btn">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo glitch" data-text="SEPHYX">SEPHYX</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="lookbook.html" class="nav-link">Lookbook</a>
+                <a href="saved.html" class="nav-link">Saved Fits</a>
+                <a href="customizer.html" class="nav-link">Outfit Generator</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="track.html" class="nav-link">Track Order</a>
+                <a href="account.html" class="nav-link active">Account</a>
+            </div>
+            <div class="nav-icons">
+                <button id="cartToggle" class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="account-hero">
+            <h1 class="page-title glitch" data-text="CULT MEMBER">CULT MEMBER</h1>
+            <p class="page-subtitle">Your digital identity in the SEPHYX network</p>
+        </section>
+
+        <section class="account-content">
+            <div class="account-grid">
+                <div class="profile-section">
+                    <div class="profile-card">
+                        <div class="profile-avatar" id="profileAvatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profileName">Anonymous Cult Member</h2>
+                            <p id="profileEmail">Not signed in</p>
+                            <div class="loyalty-badge" id="loyaltyBadge">
+                                <span class="badge-icon">🧊</span>
+                                <span class="badge-text">Street Starter</span>
+                            </div>
+                        </div>
+                        <button class="edit-profile-btn" onclick="toggleLoginForm()">
+                            <i class="fas fa-edit"></i> Sign In / Sign Up
+                        </button>
+                    </div>
+
+                    <div class="login-form" id="loginForm" style="display: none;">
+                        <h3>Join the Digital Cult</h3>
+                        <form id="authForm">
+                            <div class="form-group">
+                                <input type="email" id="emailInput" placeholder="Email Address" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="usernameInput" placeholder="Cult Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="instagramInput" placeholder="Instagram Handle">
+                            </div>
+                            <button type="submit" class="auth-btn">
+                                <i class="fas fa-rocket"></i> Enter the Cult
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <h2>Your Cult Statistics</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="savedCount">0</div>
+                                <div class="stat-label">Saved Items</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-tshirt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="fitsCount">0</div>
+                                <div class="stat-label">Saved Fits</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="cartSessions">0</div>
+                                <div class="stat-label">Cart Sessions</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="loyaltyPoints">0</div>
+                                <div class="stat-label">Loyalty Points</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-section">
+                <h2>Your Cult Timeline</h2>
+                <div class="timeline" id="timeline">
+                    <!-- Timeline items will be loaded here -->
+                </div>
+            </div>
+
+            <div class="achievements-section">
+                <h2>Achievements Unlocked</h2>
+                <div class="achievements-grid" id="achievementsGrid">
+                    <!-- Achievements will be loaded here -->
+                </div>
+            </div>
+
+            <div class="preferences-section">
+                <h2>Digital Preferences</h2>
+                <div class="preferences-grid">
+                    <div class="preference-card">
+                        <h3><i class="fas fa-palette"></i> Theme Preference</h3>
+                        <div class="preference-options">
+                            <label class="preference-option">
+                                <input type="radio" name="theme" value="cyberpunk" checked>
+                                <span>Cyberpunk (Default)</span>
+                            </label>
+                            <label class="preference-option">
+                                <input type="radio" name="theme" value="glitchcore">
+                                <span>Glitchcore</span>
+                            </label>
+                            <label class="preference-option">
+                                <input type="radio" name="theme" value="neon">
+                                <span>Neon Dreams</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="preference-card">
+                        <h3><i class="fas fa-bell"></i> Notifications</h3>
+                        <div class="preference-options">
+                            <label class="preference-toggle">
+                                <input type="checkbox" id="dropNotifications" checked>
+                                <span>Secret Drop Alerts</span>
+                            </label>
+                            <label class="preference-toggle">
+                                <input type="checkbox" id="vaultNotifications" checked>
+                                <span>Vault Access Updates</span>
+                            </label>
+                            <label class="preference-toggle">
+                                <input type="checkbox" id="loyaltyNotifications">
+                                <span>Loyalty Level Changes</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="preference-card">
+                        <h3><i class="fas fa-cog"></i> Experience</h3>
+                        <div class="preference-options">
+                            <label class="preference-toggle">
+                                <input type="checkbox" id="particleEffects" checked>
+                                <span>Particle Effects</span>
+                            </label>
+                            <label class="preference-toggle">
+                                <input type="checkbox" id="glitchEffects" checked>
+                                <span>Glitch Animations</span>
+                            </label>
+                            <label class="preference-toggle">
+                                <input type="checkbox" id="autoAudio">
+                                <span>Auto-play Audio</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="danger-zone">
+                <h2>Danger Zone</h2>
+                <div class="danger-actions">
+                    <button class="danger-btn" onclick="clearAllData()">
+                        <i class="fas fa-trash"></i> Clear All Data
+                    </button>
+                    <button class="danger-btn" onclick="exportData()">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                    <button class="danger-btn" onclick="resetToDefaults()">
+                        <i class="fas fa-undo"></i> Reset to Defaults
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Drawer -->
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="cart-header">
+            <h3>Your Vault</h3>
+            <button id="closeCart" class="close-btn">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: QR <span id="cartTotal">0</span></div>
+            <button class="checkout-btn" id="checkoutBtn">Buy Now</button>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <span>SEPHYX AI</span>
+                <button class="chatbot-close" id="chatbotClose">&times;</button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="type your vibe...">
+                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        const storage = new LocalStorage();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAccountData();
+            loadTimeline();
+            loadAchievements();
+            loadPreferences();
+        });
+
+        function toggleLoginForm() {
+            const form = document.getElementById('loginForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function loadAccountData() {
+            const profile = storage.get('userProfile', {});
+            const savedProducts = storage.get('savedProducts', []).length;
+            const savedFits = storage.get('savedFits', []).length;
+            const cartHistory = storage.get('cartHistory', []).length;
+
+            // Update profile info
+            if (profile.email) {
+                document.getElementById('profileName').textContent = profile.username || profile.email.split('@')[0];
+                document.getElementById('profileEmail').textContent = profile.email;
+            }
+
+            // Update stats
+            document.getElementById('savedCount').textContent = savedProducts;
+            document.getElementById('fitsCount').textContent = savedFits;
+            document.getElementById('cartSessions').textContent = cartHistory;
+
+            // Calculate loyalty points and status
+            const points = savedProducts * 10 + savedFits * 25 + cartHistory * 50;
+            document.getElementById('loyaltyPoints').textContent = points;
+
+            let status = 'Street Starter';
+            let icon = '🧊';
+            
+            if (points >= 500) {
+                status = 'Sephyx Saint';
+                icon = '🛸';
+            } else if (points >= 200) {
+                status = 'Drip Dealer';
+                icon = '💧';
+            }
+
+            const loyaltyBadge = document.getElementById('loyaltyBadge');
+            loyaltyBadge.innerHTML = `<span class="badge-icon">${icon}</span><span class="badge-text">${status}</span>`;
+        }
+
+        function loadTimeline() {
+            const timeline = document.getElementById('timeline');
+            const events = [];
+
+            // Add various events from localStorage
+            const firstVisit = storage.get('firstVisit');
+            if (firstVisit) {
+                events.push({
+                    date: firstVisit,
+                    event: 'Entered the SEPHYX network',
+                    icon: 'fas fa-rocket',
+                    color: 'var(--neon-cyan)'
+                });
+            }
+
+            const vaultUnlocked = storage.get('vaultUnlocked');
+            if (vaultUnlocked) {
+                events.push({
+                    date: new Date().toISOString(),
+                    event: 'Unlocked the secret vault',
+                    icon: 'fas fa-unlock',
+                    color: 'var(--neon-pink)'
+                });
+            }
+
+            const savedFits = storage.get('savedFits', []);
+            if (savedFits.length > 0) {
+                events.push({
+                    date: savedFits[0].created,
+                    event: 'Created first custom fit',
+                    icon: 'fas fa-tshirt',
+                    color: '#ffaa00'
+                });
+            }
+
+            // Sort events by date
+            events.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (events.length === 0) {
+                timeline.innerHTML = `
+                    <div class="timeline-empty">
+                        <p>Your cult journey is just beginning...</p>
+                        <p>Start exploring to build your timeline!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            timeline.innerHTML = events.map(event => `
+                <div class="timeline-item">
+                    <div class="timeline-icon" style="color: ${event.color};">
+                        <i class="${event.icon}"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-event">${event.event}</div>
+                        <div class="timeline-date">${new Date(event.date).toLocaleDateString()}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadAchievements() {
+            const grid = document.getElementById('achievementsGrid');
+            const savedProducts = storage.get('savedProducts', []).length;
+            const savedFits = storage.get('savedFits', []).length;
+            const vaultUnlocked = storage.get('vaultUnlocked', false);
+            const points = savedProducts * 10 + savedFits * 25;
+
+            const achievements = [
+                {
+                    id: 'first_save',
+                    name: 'First Save',
+                    description: 'Saved your first item',
+                    icon: 'fas fa-heart',
+                    unlocked: savedProducts > 0
+                },
+                {
+                    id: 'fit_creator',
+                    name: 'Fit Creator',
+                    description: 'Created your first custom fit',
+                    icon: 'fas fa-palette',
+                    unlocked: savedFits > 0
+                },
+                {
+                    id: 'vault_member',
+                    name: 'Vault Member',
+                    description: 'Unlocked the secret vault',
+                    icon: 'fas fa-key',
+                    unlocked: vaultUnlocked
+                },
+                {
+                    id: 'collector',
+                    name: 'Collector',
+                    description: 'Saved 10+ items',
+                    icon: 'fas fa-trophy',
+                    unlocked: savedProducts >= 10
+                },
+                {
+                    id: 'style_guru',
+                    name: 'Style Guru',
+                    description: 'Created 5+ custom fits',
+                    icon: 'fas fa-crown',
+                    unlocked: savedFits >= 5
+                },
+                {
+                    id: 'cult_legend',
+                    name: 'Cult Legend',
+                    description: 'Reached 500+ loyalty points',
+                    icon: 'fas fa-star',
+                    unlocked: points >= 500
+                }
+            ];
+
+            grid.innerHTML = achievements.map(achievement => `
+                <div class="achievement-card ${achievement.unlocked ? 'unlocked' : 'locked'}">
+                    <div class="achievement-icon">
+                        <i class="${achievement.icon}"></i>
+                    </div>
+                    <div class="achievement-info">
+                        <h3>${achievement.name}</h3>
+                        <p>${achievement.description}</p>
+                    </div>
+                    <div class="achievement-status">
+                        ${achievement.unlocked ? '<i class="fas fa-check"></i>' : '<i class="fas fa-lock"></i>'}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadPreferences() {
+            const preferences = storage.get('userPreferences', {});
+            
+            // Load checkboxes
+            Object.keys(preferences).forEach(key => {
+                const element = document.getElementById(key);
+                if (element && typeof preferences[key] === 'boolean') {
+                    element.checked = preferences[key];
+                }
+            });
+
+            // Load theme
+            if (preferences.theme) {
+                const themeRadio = document.querySelector(`input[name="theme"][value="${preferences.theme}"]`);
+                if (themeRadio) themeRadio.checked = true;
+            }
+        }
+
+        // Auth form handler
+        document.getElementById('authForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('emailInput').value;
+            const username = document.getElementById('usernameInput').value;
+            const instagram = document.getElementById('instagramInput').value;
+
+            const profile = {
+                email,
+                username: username || email.split('@')[0],
+                instagram,
+                joinDate: new Date().toISOString()
+            };
+
+            storage.set('userProfile', profile);
+            storage.set('firstVisit', new Date().toISOString());
+            
+            loadAccountData();
+            toggleLoginForm();
+            
+            // Visual feedback
+            const btn = this.querySelector('.auth-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Welcome to the Cult!';
+            btn.style.background = 'linear-gradient(45deg, #00ff00, #00aa00)';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '';
+            }, 3000);
+        });
+
+        // Preference handlers
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'checkbox' || e.target.type === 'radio') {
+                const preferences = storage.get('userPreferences', {});
+                
+                if (e.target.type === 'checkbox') {
+                    preferences[e.target.id] = e.target.checked;
+                } else if (e.target.name === 'theme') {
+                    preferences.theme = e.target.value;
+                    // Apply theme change
+                    applyTheme(e.target.value);
+                }
+                
+                storage.set('userPreferences', preferences);
+            }
+        });
+
+        function applyTheme(theme) {
+            const root = document.documentElement;
+            
+            switch (theme) {
+                case 'glitchcore':
+                    root.style.setProperty('--neon-cyan', '#ff00ff');
+                    root.style.setProperty('--neon-pink', '#00ffff');
+                    break;
+                case 'neon':
+                    root.style.setProperty('--neon-cyan', '#00ff41');
+                    root.style.setProperty('--neon-pink', '#ff0080');
+                    break;
+                default:
+                    root.style.setProperty('--neon-cyan', '#00ffff');
+                    root.style.setProperty('--neon-pink', '#ff00ff');
+            }
+        }
+
+        function clearAllData() {
+            if (confirm('⚠️ This will delete ALL your SEPHYX data. Are you sure?')) {
+                if (confirm('🚨 FINAL WARNING: This cannot be undone!')) {
+                    localStorage.clear();
+                    location.reload();
+                }
+            }
+        }
+
+        function exportData() {
+            const data = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('sephyx_')) {
+                    data[key] = localStorage.getItem(key);
+                }
+            }
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `sephyx-data-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+        }
+
+        function resetToDefaults() {
+            if (confirm('Reset all preferences to defaults?')) {
+                storage.remove('userPreferences');
+                location.reload();
+            }
+        }
+    </script>
+
+    <style>
+        .account-hero {
+            text-align: center;
+            margin: 100px 0 80px;
+        }
+
+        .account-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .account-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .profile-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.5rem;
+            color: black;
+        }
+
+        .profile-info h2 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .profile-info p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+        }
+
+        .loyalty-badge {
+            background: rgba(255, 0, 255, 0.2);
+            border: 1px solid var(--neon-pink);
+            border-radius: 25px;
+            padding: 10px 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .badge-icon {
+            font-size: 1.2rem;
+        }
+
+        .badge-text {
+            color: var(--neon-pink);
+            font-weight: bold;
+        }
+
+        .edit-profile-btn {
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 auto;
+        }
+
+        .edit-profile-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .login-form {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-pink);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .login-form h3 {
+            color: var(--neon-pink);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .login-form input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 8px;
+            padding: 12px;
+            color: white;
+            font-family: inherit;
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: var(--neon-pink);
+        }
+
+        .auth-btn {
+            width: 100%;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            border: none;
+            border-radius: 25px;
+            padding: 12px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .stats-section h2 {
+            color: var(--neon-cyan);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .stat-icon {
+            color: var(--neon-pink);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .timeline-section,
+        .achievements-section,
+        .preferences-section {
+            margin-bottom: 60px;
+        }
+
+        .timeline-section h2,
+        .achievements-section h2,
+        .preferences-section h2 {
+            color: var(--neon-pink);
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        .timeline {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-pink);
+            border-radius: 15px;
+            padding: 30px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .timeline-event {
+            color: white;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .timeline-date {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .timeline-empty {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 50px;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .achievement-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid;
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card.unlocked {
+            border-color: var(--neon-cyan);
+        }
+
+        .achievement-card.locked {
+            border-color: rgba(255, 255, 255, 0.2);
+            opacity: 0.5;
+        }
+
+        .achievement-card:hover.unlocked {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.3);
+        }
+
+        .achievement-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .achievement-card.unlocked .achievement-icon {
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            color: black;
+        }
+
+        .achievement-card.locked .achievement-icon {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .achievement-info h3 {
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .achievement-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .achievement-status {
+            margin-left: auto;
+            font-size: 1.2rem;
+        }
+
+        .achievement-card.unlocked .achievement-status {
+            color: var(--neon-cyan);
+        }
+
+        .achievement-card.locked .achievement-status {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .preferences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .preference-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .preference-card h3 {
+            color: var(--neon-cyan);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .preference-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .preference-option,
+        .preference-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .preference-option:hover,
+        .preference-toggle:hover {
+            color: var(--neon-cyan);
+        }
+
+        .preference-option input,
+        .preference-toggle input {
+            accent-color: var(--neon-cyan);
+        }
+
+        .danger-zone {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff4444;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .danger-zone h2 {
+            color: #ff4444;
+            margin-bottom: 25px;
+        }
+
+        .danger-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .danger-btn {
+            background: #ff4444;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 20px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .danger-btn:hover {
+            background: #ff6666;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .account-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .danger-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</body>
+</html>

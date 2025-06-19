@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEPHYX - Outfit Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/glitch.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        .customizer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 50px;
+        }
+
+        .customizer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .selection-panel {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .fit-preview {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-pink);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .category-section {
+            margin-bottom: 30px;
+        }
+
+        .category-title {
+            color: var(--neon-cyan);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--neon-cyan);
+            padding-bottom: 10px;
+        }
+
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+        }
+
+        .item-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .item-option:hover {
+            border-color: var(--neon-cyan);
+            transform: scale(1.05);
+        }
+
+        .item-option.selected {
+            border-color: var(--neon-pink);
+            background: rgba(255, 0, 255, 0.2);
+        }
+
+        .item-option img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .item-option .item-name {
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+        }
+
+        .item-option .item-price {
+            font-size: 0.7rem;
+            color: var(--neon-cyan);
+        }
+
+        .fit-display {
+            min-height: 400px;
+            border: 2px dashed var(--neon-pink);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+
+        .fit-items {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .fit-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 250px;
+        }
+
+        .fit-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .control-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .control-btn {
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            border: none;
+            padding: 15px;
+            border-radius: 25px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5);
+        }
+
+        .share-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--neon-cyan);
+        }
+
+        .share-text {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+            word-break: break-word;
+        }
+
+        @media (max-width: 768px) {
+            .customizer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="starfield"></div>
+    <div id="particles"></div>
+
+    <div class="audio-controls">
+        <button id="audioToggle" class="audio-btn">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo glitch" data-text="SEPHYX">SEPHYX</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="lookbook.html" class="nav-link">Lookbook</a>
+                <a href="saved.html" class="nav-link">Saved Fits</a>
+                <a href="customizer.html" class="nav-link active">Outfit Generator</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="track.html" class="nav-link">Track Order</a>
+                <a href="account.html" class="nav-link">Account</a>
+            </div>
+            <div class="nav-icons">
+                <button id="cartToggle" class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="customizer-container">
+            <h1 class="page-title glitch" data-text="OUTFIT GENERATOR">OUTFIT GENERATOR</h1>
+            <p class="page-subtitle">create your perfect sephyx fit</p>
+
+            <div class="customizer-grid">
+                <div class="selection-panel">
+                    <div class="category-section">
+                        <h3 class="category-title">Hoodies & Tops</h3>
+                        <div class="item-grid" id="hoodiesGrid"></div>
+                    </div>
+
+                    <div class="category-section">
+                        <h3 class="category-title">Bottoms</h3>
+                        <div class="item-grid" id="bottomsGrid"></div>
+                    </div>
+
+                    <div class="category-section">
+                        <h3 class="category-title">Accessories</h3>
+                        <div class="item-grid" id="accessoriesGrid"></div>
+                    </div>
+                </div>
+
+                <div class="fit-preview">
+                    <h3>Your Fit</h3>
+                    <div class="fit-display" id="fitDisplay">
+                        <p>Select items to build your fit</p>
+                    </div>
+
+                    <div class="control-buttons">
+                        <button class="control-btn" onclick="randomizeFit()">
+                            <i class="fas fa-random"></i> Randomize Fit
+                        </button>
+                        <button class="control-btn" onclick="saveFit()">
+                            <i class="fas fa-save"></i> Save My Fit
+                        </button>
+                    </div>
+
+                    <div class="share-section">
+                        <h4>Share This Drip</h4>
+                        <div class="share-text" id="shareText">Select items to generate share text</div>
+                        <button class="control-btn" onclick="copyShareText()" style="width: 100%;">
+                            <i class="fas fa-copy"></i> Copy Share Text
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Cart Drawer -->
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="cart-header">
+            <h3>Your Vault</h3>
+            <button id="closeCart" class="close-btn">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: QR <span id="cartTotal">0</span></div>
+            <button class="checkout-btn" id="checkoutBtn">Buy Now</button>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <span>SEPHYX AI</span>
+                <button class="chatbot-close" id="chatbotClose">&times;</button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="type your vibe...">
+                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        let selectedFit = {
+            hoodie: null,
+            bottom: null,
+            accessory: null
+        };
+
+        const storage = new LocalStorage();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCustomizerItems();
+        });
+
+        function loadCustomizerItems() {
+            const products = getProducts();
+            
+            const hoodies = products.filter(p => p.category === 'hoodies' || p.category === 'tees');
+            const bottoms = products.filter(p => p.category === 'bottoms');
+            const accessories = products.filter(p => p.category === 'accessories');
+
+            populateGrid('hoodiesGrid', hoodies, 'hoodie');
+            populateGrid('bottomsGrid', bottoms, 'bottom');
+            populateGrid('accessoriesGrid', accessories, 'accessory');
+        }
+
+        function populateGrid(gridId, items, category) {
+            const grid = document.getElementById(gridId);
+            grid.innerHTML = items.map(item => `
+                <div class="item-option" onclick="selectItem(${item.id}, '${category}')" data-id="${item.id}">
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-price">QR ${item.price}</div>
+                </div>
+            `).join('');
+        }
+
+        function selectItem(itemId, category) {
+            const products = getProducts();
+            const item = products.find(p => p.id === itemId);
+            
+            // Remove previous selection in this category
+            const categoryGrid = document.querySelector(`#${category === 'hoodie' ? 'hoodiesGrid' : category === 'bottom' ? 'bottomsGrid' : 'accessoriesGrid'}`);
+            categoryGrid.querySelectorAll('.item-option').forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selection to clicked item
+            document.querySelector(`[data-id="${itemId}"]`).classList.add('selected');
+            
+            selectedFit[category] = item;
+            updateFitDisplay();
+        }
+
+        function updateFitDisplay() {
+            const fitDisplay = document.getElementById('fitDisplay');
+            const shareText = document.getElementById('shareText');
+            
+            const selectedItems = Object.values(selectedFit).filter(item => item !== null);
+            
+            if (selectedItems.length === 0) {
+                fitDisplay.innerHTML = '<p>Select items to build your fit</p>';
+                shareText.textContent = 'Select items to generate share text';
+                return;
+            }
+
+            fitDisplay.innerHTML = `
+                <div class="fit-items">
+                    ${selectedItems.map(item => `
+                        <div class="fit-item">
+                            <img src="${item.image}" alt="${item.name}">
+                            <div>
+                                <div style="font-weight: bold;">${item.name}</div>
+                                <div style="color: var(--neon-cyan);">QR ${item.price}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--neon-pink);">
+                    <strong>Total: QR ${selectedItems.reduce((sum, item) => sum + item.price, 0)}</strong>
+                </div>
+            `;
+
+            // Generate share text
+            const fitDescription = selectedItems.map(item => `${item.name} (QR ${item.price})`).join(' + ');
+            shareText.textContent = `My SEPHYX fit: ${fitDescription} = Total drip for QR ${selectedItems.reduce((sum, item) => sum + item.price, 0)} 🔥 #SephyxFit #FutureDrip`;
+        }
+
+        function randomizeFit() {
+            const products = getProducts();
+            
+            const hoodies = products.filter(p => p.category === 'hoodies' || p.category === 'tees');
+            const bottoms = products.filter(p => p.category === 'bottoms');
+            const accessories = products.filter(p => p.category === 'accessories');
+
+            // Clear previous selections
+            document.querySelectorAll('.item-option').forEach(opt => opt.classList.remove('selected'));
+
+            // Random selection
+            selectedFit = {
+                hoodie: hoodies[Math.floor(Math.random() * hoodies.length)],
+                bottom: bottoms[Math.floor(Math.random() * bottoms.length)],
+                accessory: accessories[Math.floor(Math.random() * accessories.length)]
+            };
+
+            // Update UI
+            Object.entries(selectedFit).forEach(([category, item]) => {
+                if (item) {
+                    const element = document.querySelector(`[data-id="${item.id}"]`);
+                    if (element) element.classList.add('selected');
+                }
+            });
+
+            updateFitDisplay();
+        }
+
+        function saveFit() {
+            const selectedItems = Object.values(selectedFit).filter(item => item !== null);
+            
+            if (selectedItems.length === 0) {
+                alert('Select items first!');
+                return;
+            }
+
+            const fitData = {
+                id: Date.now(),
+                items: selectedItems,
+                created: new Date().toISOString(),
+                total: selectedItems.reduce((sum, item) => sum + item.price, 0)
+            };
+
+            const savedFits = storage.get('savedFits', []);
+            savedFits.push(fitData);
+            storage.set('savedFits', savedFits);
+
+            // Visual feedback
+            const saveBtn = event.target;
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<i class="fas fa-check"></i> Saved!';
+            saveBtn.style.background = 'linear-gradient(45deg, #00ff00, #00aa00)';
+            
+            setTimeout(() => {
+                saveBtn.innerHTML = originalText;
+                saveBtn.style.background = 'linear-gradient(45deg, var(--neon-cyan), var(--neon-pink))';
+            }, 2000);
+        }
+
+        function copyShareText() {
+            const shareText = document.getElementById('shareText').textContent;
+            
+            if (shareText === 'Select items to generate share text') {
+                alert('Select items first!');
+                return;
+            }
+
+            navigator.clipboard.writeText(shareText).then(() => {
+                const copyBtn = event.target;
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                copyBtn.style.background = 'linear-gradient(45deg, #00ff00, #00aa00)';
+                
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                    copyBtn.style.background = 'linear-gradient(45deg, var(--neon-cyan), var(--neon-pink))';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

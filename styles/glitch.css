@@ -1,0 +1,346 @@
+/* Glitch Effects */
+.glitch {
+    position: relative;
+    color: var(--text-primary);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: glitch 2s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    animation: glitch-1 0.5s infinite linear alternate-reverse;
+    color: var(--primary-color);
+    z-index: -1;
+}
+
+.glitch::after {
+    animation: glitch-2 0.5s infinite linear alternate-reverse;
+    color: var(--secondary-color);
+    z-index: -2;
+}
+
+@keyframes glitch {
+    0%, 14%, 15%, 49%, 50%, 99%, 100% {
+        transform: skew(0deg);
+    }
+    15%, 49% {
+        transform: skew(5deg);
+    }
+}
+
+@keyframes glitch-1 {
+    0%, 14%, 15%, 49%, 50%, 99%, 100% {
+        transform: skew(0deg);
+    }
+    15%, 49% {
+        transform: skew(10deg);
+    }
+}
+
+@keyframes glitch-2 {
+    0%, 14%, 15%, 49%, 50%, 99%, 100% {
+        transform: skew(0deg);
+    }
+    15%, 49% {
+        transform: skew(-10deg);
+    }
+}
+
+/* Logo Glitch */
+.glitch-logo {
+    animation: logoGlitch 3s infinite;
+    filter: 
+        drop-shadow(2px 0 0 var(--primary-color))
+        drop-shadow(-2px 0 0 var(--secondary-color))
+        drop-shadow(0 0 20px var(--glow-color));
+}
+
+@keyframes logoGlitch {
+    0%, 90%, 100% {
+        filter: 
+            drop-shadow(0 0 20px var(--glow-color));
+    }
+    10%, 20%, 30%, 40%, 50%, 60%, 70%, 80% {
+        filter: 
+            drop-shadow(2px 0 0 var(--primary-color))
+            drop-shadow(-2px 0 0 var(--secondary-color))
+            drop-shadow(0 0 20px var(--glow-color));
+        transform: translate(1px, -1px);
+    }
+    15%, 25%, 35%, 45%, 55%, 65%, 75%, 85% {
+        filter: 
+            drop-shadow(-2px 0 0 var(--primary-color))
+            drop-shadow(2px 0 0 var(--secondary-color))
+            drop-shadow(0 0 20px var(--glow-color));
+        transform: translate(-1px, 1px);
+    }
+}
+
+/* Glitch Buttons */
+.glitch-btn {
+    position: relative;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    color: var(--bg-color);
+    padding: 1rem 2rem;
+    font-family: var(--font-primary);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: none;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    border-radius: 5px;
+}
+
+.glitch-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.glitch-btn:hover::before {
+    left: 100%;
+}
+
+.glitch-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+    animation: buttonGlitch 0.3s;
+}
+
+@keyframes buttonGlitch {
+    0%, 100% { transform: translateY(-2px); }
+    20% { transform: translateY(-2px) skew(2deg); }
+    40% { transform: translateY(-2px) skew(-2deg); }
+    60% { transform: translateY(-2px) skew(1deg); }
+    80% { transform: translateY(-2px) skew(-1deg); }
+}
+
+/* Chromatic Aberration */
+.chromatic {
+    position: relative;
+}
+
+.chromatic::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    filter: blur(1px);
+    transform: translateX(2px);
+    z-index: -1;
+    opacity: 0.7;
+    mix-blend-mode: screen;
+}
+
+.chromatic::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    filter: blur(1px) hue-rotate(180deg);
+    transform: translateX(-2px);
+    z-index: -2;
+    opacity: 0.7;
+    mix-blend-mode: screen;
+}
+
+/* Scan Lines */
+.scanlines {
+    position: relative;
+    overflow: hidden;
+}
+
+.scanlines::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 255, 0.1) 2px,
+        rgba(0, 255, 255, 0.1) 4px
+    );
+    animation: scan 2s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+/* Neon Glow */
+.neon {
+    color: var(--primary-color);
+    text-shadow: 
+        0 0 5px var(--primary-color),
+        0 0 10px var(--primary-color),
+        0 0 20px var(--primary-color),
+        0 0 40px var(--primary-color);
+    animation: neonFlicker 2s infinite alternate;
+}
+
+@keyframes neonFlicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+        text-shadow: 
+            0 0 5px var(--primary-color),
+            0 0 10px var(--primary-color),
+            0 0 20px var(--primary-color),
+            0 0 40px var(--primary-color);
+    }
+    20%, 24%, 55% {
+        text-shadow: 
+            0 0 2px var(--primary-color),
+            0 0 5px var(--primary-color);
+    }
+}
+
+.neon-secondary {
+    color: var(--secondary-color);
+    text-shadow: 
+        0 0 5px var(--secondary-color),
+        0 0 10px var(--secondary-color),
+        0 0 20px var(--secondary-color),
+        0 0 40px var(--secondary-color);
+}
+
+/* Digital Rain Effect */
+.digital-rain {
+    position: relative;
+    overflow: hidden;
+}
+
+.digital-rain::before {
+    content: '01101001011010010110100101101001';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--primary-color);
+    font-family: var(--font-secondary);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    opacity: 0.1;
+    animation: rain 5s linear infinite;
+    pointer-events: none;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+@keyframes rain {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+/* Static Noise */
+.static {
+    position: relative;
+}
+
+.static::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-opacity='0.1'%3E%3Cpolygon fill='%23000' points='50 0 60 40 100 50 60 60 50 100 40 60 0 50 40 40'/%3E%3C/g%3E%3C/svg%3E") repeat;
+    animation: noise 0.2s infinite;
+    pointer-events: none;
+    opacity: 0.03;
+}
+
+@keyframes noise {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-1px, -1px); }
+    20% { transform: translate(1px, 1px); }
+    30% { transform: translate(-1px, 1px); }
+    40% { transform: translate(1px, -1px); }
+    50% { transform: translate(0, 1px); }
+    60% { transform: translate(1px, 0); }
+    70% { transform: translate(-1px, 0); }
+    80% { transform: translate(0, -1px); }
+    90% { transform: translate(1px, 1px); }
+}
+
+/* Holographic Effect */
+.holographic {
+    background: linear-gradient(
+        45deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 25%,
+        var(--accent-color) 50%,
+        var(--primary-color) 75%,
+        var(--secondary-color) 100%
+    );
+    background-size: 400% 400%;
+    animation: holographic 3s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+@keyframes holographic {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Matrix Text */
+.matrix {
+    font-family: var(--font-secondary);
+    color: var(--primary-color);
+    background: var(--bg-color);
+    overflow: hidden;
+    position: relative;
+}
+
+.matrix::before {
+    content: 'SEPHYX SYSTEM MATRIX DIGITAL UNDERGROUND CULT FUTURE STREETWEAR NEON';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--primary-color);
+    font-size: 0.7rem;
+    opacity: 0.1;
+    animation: matrixScroll 10s linear infinite;
+    white-space: pre;
+    word-spacing: 10px;
+    letter-spacing: 3px;
+}
+
+@keyframes matrixScroll {
+    0% { transform: translateY(100%); }
+    100% { transform: translateY(-100%); }
+}

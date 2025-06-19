@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEPHYX - Lookbook</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/glitch.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        .lookbook-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 20px 50px;
+        }
+
+        .lookbook-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .lookbook-item {
+            position: relative;
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s ease;
+        }
+
+        .lookbook-item:hover {
+            transform: scale(1.02) translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 255, 255, 0.3);
+        }
+
+        .lookbook-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .lookbook-item:hover .lookbook-image {
+            transform: scale(1.1);
+        }
+
+        .lookbook-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                45deg,
+                rgba(0, 255, 255, 0.1),
+                rgba(255, 0, 255, 0.1)
+            );
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lookbook-item:hover .lookbook-overlay {
+            opacity: 1;
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neon-cyan);
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            background: var(--neon-cyan);
+            color: black;
+            transform: scale(1.1);
+        }
+
+        .lookbook-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            padding: 40px 20px 20px;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+
+        .lookbook-item:hover .lookbook-info {
+            transform: translateY(0);
+        }
+
+        .lookbook-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .lookbook-description {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+        }
+
+        .lookbook-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .lookbook-tag {
+            background: rgba(0, 255, 255, 0.2);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+        }
+
+        .video-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            background: black;
+            border: 2px solid var(--neon-cyan);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .video-header {
+            padding: 20px;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            color: black;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .video-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: black;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .video-player {
+            width: 100%;
+            height: 450px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neon-cyan);
+            font-size: 1.2rem;
+        }
+
+        .parallax-section {
+            height: 100vh;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .parallax-content {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 50px;
+            border-radius: 20px;
+            border: 2px solid var(--neon-cyan);
+        }
+
+        .parallax-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--neon-cyan);
+        }
+
+        .parallax-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            .lookbook-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .parallax-section {
+                background-attachment: scroll;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="starfield"></div>
+    <div id="particles"></div>
+
+    <div class="audio-controls">
+        <button id="audioToggle" class="audio-btn">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo glitch" data-text="SEPHYX">SEPHYX</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="lookbook.html" class="nav-link active">Lookbook</a>
+                <a href="saved.html" class="nav-link">Saved Fits</a>
+                <a href="customizer.html" class="nav-link">Outfit Generator</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="track.html" class="nav-link">Track Order</a>
+                <a href="account.html" class="nav-link">Account</a>
+            </div>
+            <div class="nav-icons">
+                <button id="cartToggle" class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="lookbook-container">
+            <h1 class="page-title glitch" data-text="LOOKBOOK">LOOKBOOK</h1>
+            <p class="page-subtitle">cinematic visions of the future</p>
+
+            <div class="lookbook-grid">
+                <div class="lookbook-item" onclick="openVideo('Neon Dreams')">
+                    <img src="https://pixabay.com/get/ge3a2764662b4b592ba9dd5ca21cc510de1ac7729e4aa8226410f5f13196e847e4d00adcbc81f01ca9bbf3e7885271f474f63a9d133ce38801d6dda1f3c0e7116_1280.jpg" alt="Neon Dreams" class="lookbook-image">
+                    <div class="lookbook-overlay">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="lookbook-info">
+                        <h3 class="lookbook-title">Neon Dreams</h3>
+                        <p class="lookbook-description">A cyberpunk vision of street fashion in the year 2025</p>
+                        <div class="lookbook-tags">
+                            <span class="lookbook-tag">cyberpunk</span>
+                            <span class="lookbook-tag">neon</span>
+                            <span class="lookbook-tag">future</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lookbook-item" onclick="openVideo('Eclipse Drift')">
+                    <img src="https://pixabay.com/get/gc8e1c26ebaa8f6e7113272b059cdc875d0af3c4332ee8ce7e4fa0acd6110bd3a63f4ef7b1002afac96b07c65a811959854e1fe264e186213c5c9386e7c7713c8_1280.jpg" alt="Eclipse Drift" class="lookbook-image">
+                    <div class="lookbook-overlay">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="lookbook-info">
+                        <h3 class="lookbook-title">Eclipse Drift</h3>
+                        <p class="lookbook-description">Dark aesthetics meet futuristic streetwear</p>
+                        <div class="lookbook-tags">
+                            <span class="lookbook-tag">dark</span>
+                            <span class="lookbook-tag">minimalist</span>
+                            <span class="lookbook-tag">eclipse</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lookbook-item" onclick="openVideo('Glitch Culture')">
+                    <img src="https://pixabay.com/get/gaf1dd90343e702a9896c97929dbea75f75c0fbab07352137aca0fd03176168a1fbfd31389c43ba89d58c1984e83de4b1ae7dab8a170807c8201b9e07e17d6941_1280.jpg" alt="Glitch Culture" class="lookbook-image">
+                    <div class="lookbook-overlay">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="lookbook-info">
+                        <h3 class="lookbook-title">Glitch Culture</h3>
+                        <p class="lookbook-description">Digital distortion meets street reality</p>
+                        <div class="lookbook-tags">
+                            <span class="lookbook-tag">glitch</span>
+                            <span class="lookbook-tag">digital</span>
+                            <span class="lookbook-tag">distortion</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lookbook-item" onclick="openVideo('Neon Nights')">
+                    <img src="https://pixabay.com/get/gafe1aa79072b32afd5097e488051b89f57ab18598bc92721c35f93c1f958719620112af903d2b30f000788091073aeacc12b11eac3c12db5864c83d87615ba80_1280.jpg" alt="Neon Nights" class="lookbook-image">
+                    <div class="lookbook-overlay">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="lookbook-info">
+                        <h3 class="lookbook-title">Neon Nights</h3>
+                        <p class="lookbook-description">After hours in the digital city</p>
+                        <div class="lookbook-tags">
+                            <span class="lookbook-tag">nightlife</span>
+                            <span class="lookbook-tag">neon</span>
+                            <span class="lookbook-tag">urban</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lookbook-item" onclick="openVideo('Future Cult')">
+                    <img src="https://pixabay.com/get/gda91f42cf0eb8f2ebec1971ff62d858a774d9ef8affaed29127e4f9d2d7fe175fdb19d9bcefe745523fe84d7417c3d6b56b45137924c2277ce4f4c83557ff351_1280.jpg" alt="Future Cult" class="lookbook-image">
+                    <div class="lookbook-overlay">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="lookbook-info">
+                        <h3 class="lookbook-title">Future Cult</h3>
+                        <p class="lookbook-description">The sacred geometry of streetwear</p>
+                        <div class="lookbook-tags">
+                            <span class="lookbook-tag">cult</span>
+                            <span class="lookbook-tag">sacred</span>
+                            <span class="lookbook-tag">geometry</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lookbook-item" onclick="openVideo('Digital Drip')">
+                    <img src="https://pixabay.com/get/g52c9d4ffd4e9b2227f784d27e7ad7f786ff55526e362880266a88bba5d78f4ec668f89451d5f66c1e9628bd3b00d8e2854be01952a297111a6b967ff4c51dd68_1280.jpg" alt="Digital Drip" class="lookbook-image">
+                    <div class="lookbook-overlay">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="lookbook-info">
+                        <h3 class="lookbook-title">Digital Drip</h3>
+                        <p class="lookbook-description">Where technology meets style</p>
+                        <div class="lookbook-tags">
+                            <span class="lookbook-tag">tech</span>
+                            <span class="lookbook-tag">digital</span>
+                            <span class="lookbook-tag">innovation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Parallax Sections -->
+        <div class="parallax-section" style="background-image: url('https://pixabay.com/get/g79083a66a4a7535f231166ef0ba3ac60c7b8ea3ca821f4d3e3bd50fccfb9f992768da95ce75ee314303cfb70f7ba4f765133bc7d9c3fe44905d287ac33f1fb89_1280.jpg');">
+            <div class="parallax-content">
+                <h2 class="parallax-title glitch" data-text="VISION 2025">VISION 2025</h2>
+                <p class="parallax-subtitle">The future of streetwear is here</p>
+            </div>
+        </div>
+
+        <div class="parallax-section" style="background-image: url('https://pixabay.com/get/g2d7f6864dd6959da5dc1305cdcabdc9800072f1e461de6364d320048ecef0b281f094c638f4b8491e587c6d11a713addec41a9afad855b9ce2aadf8154a2c2f5_1280.jpg');">
+            <div class="parallax-content">
+                <h2 class="parallax-title glitch" data-text="DIGITAL CULT">DIGITAL CULT</h2>
+                <p class="parallax-subtitle">Join the movement. Embrace the glitch.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-content">
+            <div class="video-header">
+                <h3 id="videoTitle">Video Title</h3>
+                <button class="video-close" onclick="closeVideo()">&times;</button>
+            </div>
+            <div class="video-player" id="videoPlayer">
+                <p>🎬 Cinematic Experience Loading...</p>
+                <p style="margin-top: 20px; font-size: 0.9rem;">This would contain the actual video content</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="cart-header">
+            <h3>Your Vault</h3>
+            <button id="closeCart" class="close-btn">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: QR <span id="cartTotal">0</span></div>
+            <button class="checkout-btn" id="checkoutBtn">Buy Now</button>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <span>SEPHYX AI</span>
+                <button class="chatbot-close" id="chatbotClose">&times;</button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="type your vibe...">
+                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        function openVideo(title) {
+            const modal = document.getElementById('videoModal');
+            const videoTitle = document.getElementById('videoTitle');
+            const videoPlayer = document.getElementById('videoPlayer');
+            
+            videoTitle.textContent = title;
+            videoPlayer.innerHTML = `
+                <div style="text-align: center;">
+                    <i class="fas fa-play-circle" style="font-size: 4rem; color: var(--neon-cyan); margin-bottom: 20px;"></i>
+                    <h3>${title}</h3>
+                    <p>Cinematic streetwear vision</p>
+                    <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.7;">
+                        This would contain the actual video content showcasing SEPHYX fits in motion
+                    </p>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+            
+            // Add to view history
+            const storage = new LocalStorage();
+            const viewHistory = storage.get('viewHistory', []);
+            viewHistory.push({
+                type: 'lookbook',
+                title: title,
+                timestamp: new Date().toISOString()
+            });
+            storage.set('viewHistory', viewHistory.slice(-50)); // Keep last 50 views
+        }
+
+        function closeVideo() {
+            const modal = document.getElementById('videoModal');
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideo();
+            }
+        });
+
+        // Parallax effect
+        window.addEventListener('scroll', function() {
+            const parallaxElements = document.querySelectorAll('.parallax-section');
+            const scrolled = window.pageYOffset;
+            
+            parallaxElements.forEach(element => {
+                const rate = scrolled * -0.5;
+                element.style.transform = `translateY(${rate}px)`;
+            });
+        });
+    </script>
+</body>
+</html>

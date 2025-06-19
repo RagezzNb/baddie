@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEPHYX - Terminal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/glitch.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        body {
+            background: #000;
+            font-family: 'Space Mono', monospace;
+            overflow: hidden;
+        }
+
+        .terminal-container {
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            color: var(--neon-cyan);
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--neon-cyan);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .terminal-title {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: 1.5rem;
+        }
+
+        .terminal-exit {
+            background: none;
+            border: 1px solid var(--neon-pink);
+            color: var(--neon-pink);
+            padding: 5px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .terminal-exit:hover {
+            background: var(--neon-pink);
+            color: black;
+        }
+
+        .terminal-output {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .terminal-line {
+            margin-bottom: 5px;
+            animation: typewriter 0.5s ease-in-out;
+        }
+
+        .terminal-prompt {
+            color: var(--neon-pink);
+        }
+
+        .terminal-command {
+            color: white;
+        }
+
+        .terminal-result {
+            color: var(--neon-cyan);
+            margin-left: 20px;
+        }
+
+        .terminal-error {
+            color: #ff4444;
+            margin-left: 20px;
+        }
+
+        .terminal-success {
+            color: #00ff00;
+            margin-left: 20px;
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid var(--neon-cyan);
+            padding-top: 10px;
+        }
+
+        .terminal-input {
+            background: none;
+            border: none;
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .cursor {
+            animation: blink 1s infinite;
+        }
+
+        .ascii-art {
+            color: var(--neon-cyan);
+            font-size: 10px;
+            line-height: 1;
+            margin: 20px 0;
+        }
+
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes typewriter {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-cyan);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+    
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-title glitch" data-text="SEPHYX TERMINAL v2.5.0">SEPHYX TERMINAL v2.5.0</div>
+            <button class="terminal-exit" onclick="exitTerminal()">EXIT</button>
+        </div>
+        
+        <div class="terminal-output" id="terminalOutput">
+            <div class="ascii-art">
+███████╗███████╗██████╗ ██╗  ██╗██╗   ██╗██╗  ██╗
+██╔════╝██╔════╝██╔══██╗██║  ██║╚██╗ ██╔╝╚██╗██╔╝
+███████╗█████╗  ██████╔╝███████║ ╚████╔╝  ╚███╔╝ 
+╚════██║██╔══╝  ██╔═══╝ ██╔══██║  ╚██╔╝   ██╔██╗ 
+███████║███████╗██║     ██║  ██║   ██║   ██╔╝ ██╗
+╚══════╝╚══════╝╚═╝     ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝
+            </div>
+            <div class="terminal-line">
+                <span class="terminal-result">SEPHYX SECURE TERMINAL INITIALIZED</span>
+            </div>
+            <div class="terminal-line">
+                <span class="terminal-result">ACCESS LEVEL: CULT MEMBER</span>
+            </div>
+            <div class="terminal-line">
+                <span class="terminal-result">TYPE 'help' FOR AVAILABLE COMMANDS</span>
+            </div>
+            <div class="terminal-line">
+                <span class="terminal-result">WARNING: UNAUTHORIZED ACCESS WILL BE REPORTED</span>
+            </div>
+            <div class="terminal-line">
+                <span class="terminal-result">---</span>
+            </div>
+        </div>
+        
+        <div class="terminal-input-line">
+            <span class="terminal-prompt">sephyx@terminal:~$</span>
+            <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" autofocus>
+            <span class="cursor">_</span>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script>
+        const storage = new LocalStorage();
+        const output = document.getElementById('terminalOutput');
+        const input = document.getElementById('terminalInput');
+        
+        let commandHistory = [];
+        let historyIndex = -1;
+
+        const commands = {
+            help: {
+                description: 'Show available commands',
+                action: () => {
+                    return `Available commands:
+    help          - Show this help message
+    vault access  - Access the vault (if authorized)
+    loyalty check - Check your loyalty status
+    leaderboard   - Show top saved items
+    status        - Show system status
+    clear         - Clear terminal
+    exit          - Exit terminal
+    
+    EASTER EGG COMMANDS:
+    matrix        - Enter the matrix
+    glitchcore    - Activate holographic theme
+    hack          - Attempt system hack
+    `;
+                }
+            },
+            'vault access': {
+                description: 'Access the vault system',
+                action: () => {
+                    const vaultUnlocked = storage.get('vaultUnlocked', false);
+                    if (vaultUnlocked) {
+                        setTimeout(() => {
+                            window.location.href = 'vault.html';
+                        }, 2000);
+                        return `ACCESS GRANTED
+REDIRECTING TO VAULT...
+WELCOME TO THE INNER CIRCLE`;
+                    } else {
+                        return `ACCESS DENIED
+VAULT REQUIRES SPECIAL AUTHORIZATION
+TRY TYPING THE SECRET CODE SOMEWHERE ON THE SITE...`;
+                    }
+                }
+            },
+            'loyalty check': {
+                description: 'Check loyalty status',
+                action: () => {
+                    const savedProducts = storage.get('savedProducts', []).length;
+                    const savedFits = storage.get('savedFits', []).length;
+                    const cartHistory = storage.get('cartHistory', []).length;
+                    
+                    let status = 'Street Starter';
+                    let points = savedProducts * 10 + savedFits * 25 + cartHistory * 50;
+                    
+                    if (points >= 500) status = 'Sephyx Saint';
+                    else if (points >= 200) status = 'Drip Dealer';
+                    
+                    return `LOYALTY STATUS: ${status}
+POINTS: ${points}
+SAVED PRODUCTS: ${savedProducts}
+SAVED FITS: ${savedFits}
+CART SESSIONS: ${cartHistory}
+
+${status === 'Sephyx Saint' ? '🛸 MAXIMUM LOYALTY ACHIEVED' : 'Keep engaging to level up!'}`;
+                }
+            },
+            leaderboard: {
+                description: 'Show top saved items',
+                action: () => {
+                    const products = [
+                        { name: 'Eclipse Drift Hoodie', saves: 847 },
+                        { name: 'Neon Dawn Tee', saves: 623 },
+                        { name: 'Glitch Cargo Pants', saves: 456 },
+                        { name: 'Neural Interface Cap', saves: 234 },
+                        { name: 'Future Tech Accessories', saves: 189 }
+                    ];
+                    
+                    return `🏆 MOST SAVED ITEMS:
+1. ${products[0].name} - ${products[0].saves} saves
+2. ${products[1].name} - ${products[1].saves} saves
+3. ${products[2].name} - ${products[2].saves} saves
+4. ${products[3].name} - ${products[3].saves} saves
+5. ${products[4].name} - ${products[4].saves} saves
+
+YOUR TASTE INFLUENCES THE ALGORITHM`;
+                }
+            },
+            status: {
+                description: 'Show system status',
+                action: () => {
+                    return `SEPHYX SYSTEM STATUS:
+🟢 MAIN SERVERS: ONLINE
+🟢 VAULT ACCESS: SECURE
+🟢 CART SYSTEM: OPERATIONAL
+🟢 GLITCH ENGINE: ACTIVE
+🟡 QUANTUM DRIP: CALIBRATING
+🔴 TIME MACHINE: OFFLINE
+
+LAST UPDATE: ${new Date().toLocaleString()}`;
+                }
+            },
+            clear: {
+                description: 'Clear terminal screen',
+                action: () => {
+                    setTimeout(() => {
+                        output.innerHTML = `<div class="terminal-line">
+                            <span class="terminal-result">TERMINAL CLEARED</span>
+                        </div>`;
+                    }, 100);
+                    return '';
+                }
+            },
+            matrix: {
+                description: 'Enter the matrix',
+                action: () => {
+                    createMatrixRain();
+                    return `ENTERING THE MATRIX...
+RED PILL OR BLUE PILL?
+THE CHOICE IS YOURS, NEO.
+
+REALITY IS JUST A SEPHYX SIMULATION`;
+                }
+            },
+            glitchcore: {
+                description: 'Activate holographic theme',
+                action: () => {
+                    document.body.style.background = 'linear-gradient(45deg, rgba(255,0,255,0.1), rgba(0,255,255,0.1))';
+                    document.documentElement.style.setProperty('--neon-cyan', '#ff00ff');
+                    document.documentElement.style.setProperty('--neon-pink', '#00ffff');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 3000);
+                    
+                    return `HOLOGRAPHIC THEME ACTIVATED
+WELCOME TO THE GLITCHCORE DIMENSION
+REALITY IS NOW OPTIONAL
+REDIRECTING TO MAIN SYSTEM...`;
+                }
+            },
+            hack: {
+                description: 'Attempt system hack',
+                action: () => {
+                    return `ATTEMPTING HACK...
+ACCESS DENIED
+ACCESS DENIED
+ACCESS DENIED
+
+NICE TRY, SCRIPT KIDDIE
+THE SEPHYX SYSTEM IS UNHACKABLE
+TRY BUYING SOME DRIP INSTEAD 💀`;
+                }
+            }
+        };
+
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value.trim().toLowerCase();
+                commandHistory.unshift(command);
+                historyIndex = -1;
+                
+                addToOutput(`sephyx@terminal:~$ ${this.value}`, 'terminal-command');
+                
+                if (commands[command]) {
+                    const result = commands[command].action();
+                    if (result) {
+                        addToOutput(result, 'terminal-result');
+                    }
+                } else if (command === 'exit') {
+                    exitTerminal();
+                    return;
+                } else if (command === '') {
+                    // Empty command, do nothing
+                } else {
+                    addToOutput(`Command not found: ${command}. Type 'help' for available commands.`, 'terminal-error');
+                }
+                
+                this.value = '';
+                scrollToBottom();
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    this.value = commandHistory[historyIndex];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    this.value = commandHistory[historyIndex];
+                } else if (historyIndex === 0) {
+                    historyIndex = -1;
+                    this.value = '';
+                }
+            }
+        });
+
+        function addToOutput(text, className) {
+            const lines = text.split('\n');
+            lines.forEach(line => {
+                const div = document.createElement('div');
+                div.className = `terminal-line ${className}`;
+                div.textContent = line;
+                output.appendChild(div);
+            });
+        }
+
+        function scrollToBottom() {
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function exitTerminal() {
+            addToOutput('EXITING TERMINAL...', 'terminal-result');
+            addToOutput('GOODBYE, CULT MEMBER', 'terminal-result');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        }
+
+        function createMatrixRain() {
+            const matrixContainer = document.getElementById('matrixRain');
+            const characters = 'SEPHYX0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=[]{}|;:,.<>?';
+            
+            for (let i = 0; i < 50; i++) {
+                const column = document.createElement('div');
+                column.style.position = 'absolute';
+                column.style.left = Math.random() * 100 + '%';
+                column.style.color = 'var(--neon-cyan)';
+                column.style.fontFamily = 'Space Mono, monospace';
+                column.style.fontSize = '14px';
+                column.style.animation = `fall ${Math.random() * 3 + 2}s linear infinite`;
+                column.style.animationDelay = Math.random() * 2 + 's';
+                
+                let text = '';
+                for (let j = 0; j < 20; j++) {
+                    text += characters[Math.floor(Math.random() * characters.length)] + '<br>';
+                }
+                column.innerHTML = text;
+                
+                matrixContainer.appendChild(column);
+            }
+        }
+
+        // Add CSS animation for matrix rain
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                0% { transform: translateY(-100vh); opacity: 1; }
+                100% { transform: translateY(100vh); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Auto-focus input
+        input.focus();
+        
+        // Keep input focused
+        document.addEventListener('click', () => {
+            input.focus();
+        });
+    </script>
+</body>
+</html>

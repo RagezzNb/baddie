@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEPHYX - The Vault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/glitch.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <div id="starfield"></div>
+    <div id="particles"></div>
+
+    <div class="audio-controls">
+        <button id="audioToggle" class="audio-btn">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo glitch" data-text="SEPHYX">SEPHYX</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="shop.html" class="nav-link active">Shop</a>
+                <a href="lookbook.html" class="nav-link">Lookbook</a>
+                <a href="saved.html" class="nav-link">Saved Fits</a>
+                <a href="customizer.html" class="nav-link">Outfit Generator</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="track.html" class="nav-link">Track Order</a>
+                <a href="account.html" class="nav-link">Account</a>
+            </div>
+            <div class="nav-icons">
+                <button id="cartToggle" class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="shop-header">
+            <h1 class="page-title glitch" data-text="THE VAULT">THE VAULT</h1>
+            <p class="shop-subtitle">available only in qatar – cash on delivery</p>
+        </section>
+
+        <section class="shop-filters">
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="hoodies">Hoodies</button>
+                <button class="filter-btn" data-filter="tees">Tees</button>
+                <button class="filter-btn" data-filter="bottoms">Bottoms</button>
+                <button class="filter-btn" data-filter="accessories">Accessories</button>
+            </div>
+        </section>
+
+        <section class="product-grid" id="productGrid">
+            <!-- Products will be loaded dynamically -->
+        </section>
+    </main>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-body" id="modalBody">
+                <!-- Product details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="cart-header">
+            <h3>Your Vault</h3>
+            <button id="closeCart" class="close-btn">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: QR <span id="cartTotal">0</span></div>
+            <button class="checkout-btn" id="checkoutBtn">Buy Now</button>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <span>SEPHYX AI</span>
+                <button class="chatbot-close" id="chatbotClose">&times;</button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="type your vibe...">
+                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Shop-specific initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            setupFilters();
+        });
+
+        function loadProducts() {
+            const grid = document.getElementById('productGrid');
+            const products = getProducts();
+            
+            grid.innerHTML = products.map(product => `
+                <div class="product-card" data-category="${product.category}">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" loading="lazy">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn" onclick="openProductModal(${product.id})">
+                                Quick View
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-price">QR ${product.price}</p>
+                        <div class="product-actions">
+                            <select class="size-select" id="size-${product.id}">
+                                ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
+                            </select>
+                            <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                                Add to Cart
+                            </button>
+                            <button class="save-btn" onclick="saveProduct(${product.id})">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setupFilters() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const productCards = document.querySelectorAll('.product-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filter = this.dataset.filter;
+                    
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    productCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'block';
+                            card.classList.add('fade-in');
+                        } else {
+                            card.style.display = 'none';
+                            card.classList.remove('fade-in');
+                        }
+                    });
+                });
+            });
+        }
+
+        function openProductModal(productId) {
+            const product = getProducts().find(p => p.id === productId);
+            const modal = document.getElementById('productModal');
+            const modalBody = document.getElementById('modalBody');
+
+            modalBody.innerHTML = `
+                <div class="modal-product">
+                    <div class="modal-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="modal-details">
+                        <h2>${product.name}</h2>
+                        <p class="modal-price">QR ${product.price}</p>
+                        <p class="modal-description">${product.description}</p>
+                        <div class="model-stats">
+                            <p><strong>Model Stats:</strong> ${product.modelStats}</p>
+                        </div>
+                        <div class="suggested-bundles">
+                            <h4>Suggested Bundles:</h4>
+                            <div class="bundle-items">
+                                ${product.bundles.map(bundle => `
+                                    <div class="bundle-item" onclick="shareFit('${bundle}')">
+                                        <span>${bundle}</span>
+                                        <i class="fab fa-instagram"></i>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div class="modal-actions">
+                            <select class="modal-size-select" id="modal-size-${product.id}">
+                                ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
+                            </select>
+                            <button class="modal-add-cart" onclick="addToCart(${product.id}, true)">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            modal.style.display = 'block';
+        }
+
+        function shareFit(bundle) {
+            const message = `yo sephyx, i want this fit: ${bundle}`;
+            const instagramUrl = `https://instagram.com/direct/new/?text=${encodeURIComponent(message)}`;
+            window.open(instagramUrl, '_blank');
+        }
+
+        // Close modal
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('productModal');
+            if (e.target.classList.contains('modal') || e.target.classList.contains('modal-close')) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
